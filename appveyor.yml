@@ -1,0 +1,2 @@
+deploy_script:
+  - IF DEFINED APPVEYOR_REPO_TAG_NAME (npm run build)

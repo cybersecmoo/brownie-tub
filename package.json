@@ -6,11 +6,28 @@
   "scripts": {
     "start": "electron .",
     "watch": "nodemon --exec 'electron .'",
-    "reset": "git reset --hard"
+    "reset": "git reset --hard",
+    "build": "build",
+    "release": "build"
+  },
+  "build": {
+    "productName": "BROWNIE TUB",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "publish": ["github"]
+    },
+    "win": {
+      "target": "NSIS",
+      "publish": ["github"]
+    }
   },
   "author": "cybersecmoo",
   "devDependencies": {
     "electron": "^7.1.10",
+    "electron-builder": "^22.3.2",
     "nodemon": "^2.0.2"
   },
   "dependencies": {}
