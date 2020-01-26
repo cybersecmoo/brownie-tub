@@ -1,2 +1,12 @@
+platform:
+  - x64
+
+install:
+  - ps: Install-Product node Current x64
+  - npm install npm -g
+  - npm install -g electron-builder
+  - npm install
+
 deploy_script:
-  - IF DEFINED APPVEYOR_REPO_TAG_NAME (npm run build)
+  - npm run build
+  - IF DEFINED APPVEYOR_REPO_TAG_NAME (npm run release)
