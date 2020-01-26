@@ -1,0 +1,17 @@
+{
+  "name": "brownie-tub",
+  "version": "1.0.0",
+  "description": "BROWNIE TUB web shell client",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "watch": "nodemon --exec 'electron .'",
+    "reset": "git reset --hard"
+  },
+  "author": "cybersecmoo",
+  "devDependencies": {
+    "electron": "^7.1.10",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {}
+}
