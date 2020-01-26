@@ -1,6 +1,10 @@
 platform:
   - x64
 
+branches:
+  only:
+    - master
+
 install:
   - ps: Install-Product node Current x64
   - npm install npm -g
