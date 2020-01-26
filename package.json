@@ -1,6 +1,6 @@
 {
   "name": "brownie-tub",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "BROWNIE TUB web shell client",
   "main": "main.js",
   "scripts": {
@@ -36,10 +36,9 @@
     "chai-as-promised": "^7.1.1",
     "electron": "^7.1.10",
     "electron-builder": "^22.3.2",
-    "electron-chromedriver": "^8.0.0-beta.7",
     "mocha": "^7.0.1",
     "nodemon": "^2.0.2",
-    "spectron": "^10.0.0"
+    "spectron": "^9.0.0"
   },
   "dependencies": {}
 }
