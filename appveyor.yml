@@ -7,6 +7,11 @@ install:
   - npm install -g electron-builder
   - npm install
 
-deploy_script:
+test_script:
+  - npm run test
+
+build_script:
   - npm run build
-  - IF DEFINED APPVEYOR_REPO_TAG_NAME (npm run release)
+
+deploy_script:
+  - npm run release
