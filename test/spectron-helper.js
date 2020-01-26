@@ -1,7 +1,7 @@
-import { Application } from "spectron";
+const Application = require("spectron").Application;
 
 class TestHelper {
-	initialiseSpectron = () =>{
+	initialiseSpectron() {
 		var electronPath = path.join(__dirname, "../node_modules", ".bin", "electron");
 		const appPath = path.join(__dirname, "../dist");
 
