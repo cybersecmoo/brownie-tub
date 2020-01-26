@@ -8,8 +8,8 @@
     "watch": "nodemon --exec 'electron .'",
     "reset": "git reset --hard",
     "test": "mocha --timeout 20000 \"./test/**/*test-*.js\"",
-    "build": "build",
-    "release": "build"
+    "build": "electron-builder",
+    "release": "electron-builder"
   },
   "build": {
     "productName": "BROWNIE TUB",
