@@ -20,7 +20,7 @@ class TestHelper {
 				NODE_ENV: "development"
 			},
 			startTimeout: 20000,
-			chromeDriverLogPath: "../chromedriverlog.txt"
+			chromeDriverLogPath: "chromedriverlog.txt"
 		});
 	}
 }
