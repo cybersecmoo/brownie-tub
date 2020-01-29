@@ -1,18 +1,16 @@
 {
   "name": "brownie-tub",
-  "version": "0.0.1",
-  "description": "BROWNIE TUB web shell client",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "watch": "nodemon --exec 'electron .'",
-    "reset": "git reset --hard",
-    "test": "mocha --timeout 20000 \"./test/**/*test-*.js\"",
-    "build": "electron-builder",
-    "release": "electron-builder"
-  },
+  "version": "0.0.2",
+  "main": "public/main.js",
+  "private": true,
+  "homepage": "./",
   "build": {
     "productName": "BROWNIE TUB",
+    "appId": "BrownieTub",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
     "linux": {
       "target": [
         "AppImage",
@@ -29,7 +27,6 @@
       ]
     }
   },
-  "author": "cybersecmoo",
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
@@ -40,5 +37,37 @@
     "nodemon": "^2.0.2",
     "spectron": "^9.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/styles": "^4.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "mocha --timeout 20000 \"./test/**/*test-*.js\"",
+    "eject": "react-scripts eject",
+    "electron-start": "electron .",
+    "preelectron-pack": "npm run build",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/main.js",
+    "release": "electron-builder -c.extraMetadata.main=build/main.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
