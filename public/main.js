@@ -1,5 +1,6 @@
 // Modules
 const { app, BrowserWindow } = require('electron')
+const path = require("path")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -14,7 +15,7 @@ function createWindow() {
     });
 
     // Load index.html into the new BrowserWindow
-    mainWindow.loadFile('index.html');
+    mainWindow.loadURL(`file://${path.join(__dirname, "../build/index.html")}`);
 
     // Listen for window being closed
     mainWindow.on('closed', () => {

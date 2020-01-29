@@ -5,7 +5,7 @@ class TestHelper {
 	static initialiseSpectron() {
 		console.log("Initialising Spectron");
 		var electronPath = path.join(__dirname, "../node_modules", ".bin", "electron");
-		const appPath = path.join(__dirname, "../");
+		const appPath = path.join(__dirname, "../public/");
 
 		if(process.platform === "win32") {
 			electronPath += ".cmd";
