@@ -16,6 +16,7 @@ function createWindow() {
 
     // Load index.html into the new BrowserWindow
     mainWindow.loadURL(`file://${path.join(__dirname, "../build/index.html")}`);
+    mainWindow.maximize();
 
     // Listen for window being closed
     mainWindow.on('closed', () => {
