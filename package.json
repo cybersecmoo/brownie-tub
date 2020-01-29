@@ -1,7 +1,7 @@
 {
   "name": "brownie-tub",
   "version": "0.0.2",
-  "main": "main.js",
+  "main": "public/main.js",
   "private": true,
   "homepage": "./",
   "build": {
