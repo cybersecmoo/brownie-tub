@@ -15,3 +15,11 @@ BROWNIE TUB can support essentially any web shell that is based on commands bein
 - Easy-to-Use: simple GUI allows easy control and configuration of your shells
 - Configurable: you can back it with any SQL database. By default, it uses an H2 database.
 - Control multiple shells from one app: track as many shells as you'd like, and switch between them seamlessly
+
+### Building this Yourself ###
+
+1. Clone this repo
+2. Run `npm install` to grab the dependencies
+3. Run `npm run rebuild` to rebuild the sqlite3 module, so it works with electron
+4. Run `npm run build` to build the react part
+5. Run `npm run electron-pack` to package the app.
