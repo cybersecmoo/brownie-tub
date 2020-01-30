@@ -1,13 +1,14 @@
 // Modules
 const { app, BrowserWindow } = require('electron')
 const path = require("path")
+const { getDatabase } = require("../src/db/setup-db")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
 // Create a new BrowserWindow when `app` is ready
-function createWindow() {
+async function createWindow() {
 
     mainWindow = new BrowserWindow({
         width: 1000, height: 800,
@@ -18,9 +19,11 @@ function createWindow() {
     mainWindow.loadURL(`file://${path.join(__dirname, "../build/index.html")}`);
     mainWindow.maximize();
 
+    await getDatabase("shells", "websql");
+
     // Listen for window being closed
     mainWindow.on('closed', () => {
-        mainWindow = null
+        mainWindow = null;
     });
 }
 
@@ -28,7 +31,7 @@ function createWindow() {
 app.on('ready', createWindow);
 
 // Quit when all windows are closed - (Not macOS - Darwin)
-app.on('window-all-closed', () => {
+app.on('window-all-closed', () => {    
     if (process.platform !== 'darwin') {
         app.quit()
     }

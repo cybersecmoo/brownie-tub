@@ -1,6 +1,6 @@
 {
   "name": "brownie-tub",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "public/main.js",
   "private": true,
   "homepage": "./",
@@ -33,6 +33,7 @@
     "chai-as-promised": "^7.1.1",
     "electron": "^7.1.10",
     "electron-builder": "^22.3.2",
+    "electron-rebuild": "^1.10.0",
     "mocha": "^7.0.1",
     "nodemon": "^2.0.2",
     "spectron": "^9.0.0"
@@ -41,15 +42,17 @@
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "@material-ui/styles": "^4.9.0",
+    "pouchdb-adapter-node-websql": "^7.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "rxdb": "^8.7.5",
+    "rxjs": "^6.5.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "mocha --timeout 20000 \"./test/**/*test-*.js\"",
-    "eject": "react-scripts eject",
+    "rebuild": "electron-rebuild -f -w pouchdb-adapter-node-websql",
     "electron-start": "electron .",
     "preelectron-pack": "npm run build",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/main.js",
