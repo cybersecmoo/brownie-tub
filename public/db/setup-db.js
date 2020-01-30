@@ -4,7 +4,6 @@ RxDB.plugin(require("pouchdb-adapter-node-websql"));
 
 let _getDatabase;
 
-// TODO: Pass in a password for the DB
 const getDatabase = (name, adapter) => {
 	if(!_getDatabase) {
 		_getDatabase = createDatabase(name, adapter);

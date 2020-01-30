@@ -1,7 +1,7 @@
 // Modules
 const { app, BrowserWindow } = require('electron')
 const path = require("path")
-const { getDatabase } = require("../src/db/setup-db")
+const { getDatabase } = require("./db/setup-db")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
