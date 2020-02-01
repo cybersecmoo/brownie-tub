@@ -1,5 +1,5 @@
-import { ADD_SHELL, REMOVE_SHELL } from "../types";
+import { ipcRenderer } from "electron";
 
-export const addShell = ({ ipOrHostname, os, isAdmin }) => async dispatch => {
-	
+export const addShell = (shellDetails) => async dispatch => {
+	ipcRenderer.send("shell:create", shellDetails);
 };

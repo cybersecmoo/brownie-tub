@@ -24,7 +24,7 @@ const App = () => {
     <ThemeProvider theme={dark}>
       <CssBaseline />
       <div className={classes.root}>
-        <Grid container spacing={3}>
+        <Grid container>
           <Grid item xs={2}>
             <ShellList />
           </Grid>
