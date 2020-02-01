@@ -5,3 +5,12 @@
 .MuiButton-label {
 	color: white;
 }
+
+div.MuiPaper-root {
+	width: 75%;
+}
+
+label.MuiFormControlLabel-root {
+	margin-top: 20px;
+	margin-left: 0px;
+}
