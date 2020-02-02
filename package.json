@@ -48,8 +48,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "rebuild": "electron-rebuild -f -w pouchdb-adapter-node-websql",
-    "electron-start": "electron .",
+    "electron-start": "npm run build && electron .",
     "preelectron-pack": "npm run build",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
     "release": "electron-builder -c.extraMetadata.main=build/electron.js"

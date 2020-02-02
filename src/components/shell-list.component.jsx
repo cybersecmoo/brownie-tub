@@ -3,9 +3,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from "@material-ui/core/IconButton";
 import ComputerIcon from '@material-ui/icons/Computer';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import ShellCreateForm from "./shell-create-form.component";
+import AlertDialog from "./alert-dialog.component";
 import "./shell-list.css";
 
 class ShellList extends Component {
@@ -13,48 +16,59 @@ class ShellList extends Component {
 		super(props);
 		this.state = {
 			open: false,
-			shells: []
+			alert: false,
+			shells: [],
+			selectedIndex: -1
 		};
 		this.handleFormClose = this.handleFormClose.bind(this);
 		this.handleFormOpen = this.handleFormOpen.bind(this);
+		this.handleOpenAlert = this.handleOpenAlert.bind(this);
+		this.handleAlertClose = this.handleAlertClose.bind(this);
+		this.handleAcceptAlert = this.handleAcceptAlert.bind(this);
 
 		window.ipcRenderer.on("shell:create-reply", (event, shell) => {
 			console.log("New shell created");
 			var shellsList = this.state.shells;
 			shellsList.push(shell);
-			this.setState({
-				open: this.state.open,
-				shells: shellsList
-			});
+			this.state.shells = shellsList;
 		});
 	}
 
 	handleFormOpen() {
-		this.setState({
-			open: true,
-			shells: this.state.shells
-		});
+		this.state.open = true;
 	};
 
 	handleFormClose() {
-		this.setState({
-			open: false,
-			shells: this.state.shells
-		});
+		this.state.open = false;
 	};
+
+	handleOpenAlert(index) {
+		this.state.selectedIndex = index;
+	}
+
+	handleAlertClose() {
+		this.state.alert = false;
+	}
+
+	handleAcceptAlert() {
+		window.ipcRenderer.send("shell:delete", this.state.shells[this.state.selectedIndex]);
+	}
 
 	render() {
 		return (
 			<div className="shell-list">
 				<List component="nav" aria-label="shells">
 					{
-						this.state.shells.map((shell) => {
+						this.state.shells.map((shell, index) => {
 							return (
-								<ListItem button>
-									<ListItemIcon>
+								<ListItem>
+									<IconButton color="primary">
 										<ComputerIcon />
-									</ListItemIcon>
+									</IconButton>
 									<ListItemText primary={shell.ipOrHostname} />
+									<IconButton color="secondary" onClick={this.handleOpenAlert(index)}>
+										<DeleteForeverIcon />
+									</IconButton>
 								</ListItem>
 							);
 						})
@@ -67,7 +81,8 @@ class ShellList extends Component {
 						<ListItemText primary="Add New" />
 					</ListItem>
 				</List>
-				<ShellCreateForm open={this.state.open} onClose={this.handleFormClose} />					
+				<ShellCreateForm open={this.state.open} onClose={this.handleFormClose} />
+				<AlertDialog open={this.state.alert} onClose={this.handleFormClose} onAccept={this.handleAcceptAlert} />
 			</div>
 		);
 	}
