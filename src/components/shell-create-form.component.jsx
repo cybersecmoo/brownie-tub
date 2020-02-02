@@ -41,7 +41,7 @@ const ShellCreateForm = (props) => {
 	// TODO: Fire off an IPC (or Redux?) event
 	const handleSubmit = () => {
 		console.log(state);
-		ipcRenderer.send("shell:create", shellDetails);
+		ipcRenderer.send("shell:create", state);
 		props.onClose();
 	}
 
