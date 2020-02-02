@@ -1,6 +1,6 @@
 {
   "name": "brownie-tub",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "public/electron.js",
   "private": true,
   "homepage": "./",
