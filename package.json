@@ -1,7 +1,7 @@
 {
   "name": "brownie-tub",
   "version": "0.1.0",
-  "main": "public/main.js",
+  "main": "public/electron.js",
   "private": true,
   "homepage": "./",
   "build": {
@@ -50,8 +50,8 @@
     "rebuild": "electron-rebuild -f -w pouchdb-adapter-node-websql",
     "electron-start": "electron .",
     "preelectron-pack": "npm run build",
-    "electron-pack": "electron-builder -c.extraMetadata.main=build/main.js",
-    "release": "electron-builder -c.extraMetadata.main=build/main.js"
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
+    "release": "electron-builder -c.extraMetadata.main=build/electron.js"
   },
   "eslintConfig": {
     "extends": "react-app"
