@@ -12,10 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
-//import { ipcRenderer } from "electron";
 import "./shell-list.css";
-
-//const { ipcRenderer } = window.require("electron");
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -71,7 +68,7 @@ const ShellCreateForm = (props) => {
 							labelId="commandParamType-label"
 							id="commandParamType"
 							value={state.paramType}
-							onChange={handleStringChanged("paramType")}
+							onChange={handleStringChanged("commandParamType")}
 						>
 							<MenuItem value="">
 								<em>None</em>
@@ -83,7 +80,7 @@ const ShellCreateForm = (props) => {
 						</Select>
 					</FormControl>
 					<FormControl className={classes.formControl}>
-						<TextField id="commandParam" label="Command Parameter" fullWidth />
+						<TextField id="commandParam" label="Command Parameter" onChange={handleStringChanged("commandParam")} fullWidth />
 					</FormControl>
 				</div>
 

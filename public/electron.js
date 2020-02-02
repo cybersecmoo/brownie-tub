@@ -23,16 +23,20 @@ async function createWindow() {
   mainWindow.maximize();
 
   const db = await getDatabase("shells", "websql");
+  const shellCollection = db.shells;
 
   ipcMain.on("shell:create", async (event, shellDetails) => {
     try {
-      const shellCollection = db.shells;
       await shellCollection.insert(shellDetails);
       console.log("Inserted");
+      event.reply("shell:create-reply", shellDetails);
     } catch (error) {
       console.error(error);
+      event.reply("shell:create-error", error);
     }
   });
+
+
 
   // Listen for window being closed
   mainWindow.on("closed", () => {
