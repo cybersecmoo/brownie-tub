@@ -37,6 +37,7 @@ const ShellCreateForm = (props) => {
 		isAdmin: false
 	});
 
+	// TODO: Fire off an IPC (or Redux?) event
 	const handleSubmit = () => {
 		console.log(state);
 		props.onClose();
