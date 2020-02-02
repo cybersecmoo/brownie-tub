@@ -12,7 +12,7 @@ async function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
-    webPreferences: { 
+    webPreferences: {
       nodeIntegration: false,
       preload: __dirname + "/preload.js"
     }
@@ -24,10 +24,14 @@ async function createWindow() {
 
   const db = await getDatabase("shells", "websql");
 
-  ipcMain.on("shell:create", (event, shellDetails) => {
-    const shellCollection = db.shells;
-    shellCollection.insert(shellDetails);
-    console.log("Inserted");
+  ipcMain.on("shell:create", async (event, shellDetails) => {
+    try {
+      const shellCollection = db.shells;
+      await shellCollection.insert(shellDetails);
+      console.log("Inserted");
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   // Listen for window being closed

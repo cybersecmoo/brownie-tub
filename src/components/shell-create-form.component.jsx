@@ -31,7 +31,7 @@ const ShellCreateForm = (props) => {
 	const classes = useStyles();
 	const [state, setState] = React.useState({
 		ipOrHostname: "",
-		paramType: "",
+		commandParamType: "",
 		commandParam: "",
 		passwordEnabled: false,
 		passwordParam: "",
