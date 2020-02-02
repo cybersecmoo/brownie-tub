@@ -1,13 +1,9 @@
 import React from 'react';
 import './App.css';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ComputerIcon from '@material-ui/icons/Computer';
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from '@material-ui/core/Grid';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import ShellList from "./components/shell-list.component";
 
 const dark = createMuiTheme({
   palette: {
@@ -28,22 +24,15 @@ const App = () => {
     <ThemeProvider theme={dark}>
       <CssBaseline />
       <div className={classes.root}>
-        <Grid container spacing={3}>
+        <Grid container>
           <Grid item xs={2}>
-            <List component="nav" aria-label="victims">
-              <ListItem button>
-                <ListItemIcon>
-                  <ComputerIcon />
-                </ListItemIcon>
-                <ListItemText primary="192.168.0.1" />
-              </ListItem>
-            </List>
+            <ShellList />
           </Grid>
           <Grid item xs={4}>
           </Grid>
           <Grid item xs={2}>
           </Grid>
-        </Grid>   
+        </Grid>
       </div>
     </ThemeProvider>
   );

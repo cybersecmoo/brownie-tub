@@ -8,14 +8,32 @@ const WebShellSchema = {
 			type: "string",
 			primary: true
 		},
+		commandParamType: {
+			type: "string",
+			enum: ["header", "cookie", "POST", "GET"]
+		},
+		commandParam: {
+			type: "string"
+		},
+		passwordEnabled: {
+			type: "boolean",
+			default: false
+		},
+		passwordParam: {
+			type: "string"
+		},
+		password: {
+			type: "string"
+		},
 		os: {
 			type: "string"
 		},
 		isAdmin: {
-			type: "boolean"
+			type: "boolean",
+			default: false
 		}
 	},
-	required: ["ipOrHostname"]
+	required: ["ipOrHostname", "commandParamType", "commandParam", "passwordEnabled", "isAdmin"]
 }
 
 module.exports = {
