@@ -12,8 +12,9 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
-import { ipcRenderer } from "electron";
 import "./shell-list.css";
+
+const { ipcRenderer } = window.require("electron");
 
 const useStyles = makeStyles(theme => ({
   formControl: {
