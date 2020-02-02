@@ -27,31 +27,51 @@ class ShellList extends Component {
 		this.handleAcceptAlert = this.handleAcceptAlert.bind(this);
 
 		window.ipcRenderer.on("shell:create-reply", (event, shell) => {
-			console.log("New shell created");
 			var shellsList = this.state.shells;
 			shellsList.push(shell);
-			this.state.shells = shellsList;
+			this.setState({
+				shells: shellsList
+			});
+		});
+
+		window.ipcRenderer.on("shell:delete-reply", (event) => {
+			var shellsList = this.state.shells;
+			shellsList.splice(this.state.selectedIndex, 1);
+			this.setState({
+				shells: shellsList
+			});
 		});
 	}
 
 	handleFormOpen() {
-		this.state.open = true;
+		this.setState({
+			open: true
+		});
 	};
 
 	handleFormClose() {
-		this.state.open = false;
+		this.setState({
+			open: false
+		});
 	};
 
 	handleOpenAlert(index) {
-		this.state.selectedIndex = index;
+		this.setState({
+			alert: true,
+			selectedIndex: index
+		});
 	}
 
 	handleAlertClose() {
-		this.state.alert = false;
+		this.setState({
+			alert: false,
+			selectedIndex: -1
+		});
 	}
 
 	handleAcceptAlert() {
 		window.ipcRenderer.send("shell:delete", this.state.shells[this.state.selectedIndex]);
+		this.handleAlertClose();
 	}
 
 	render() {
@@ -62,11 +82,11 @@ class ShellList extends Component {
 						this.state.shells.map((shell, index) => {
 							return (
 								<ListItem>
-									<IconButton color="primary">
+									<IconButton color="default">
 										<ComputerIcon />
 									</IconButton>
 									<ListItemText primary={shell.ipOrHostname} />
-									<IconButton color="secondary" onClick={this.handleOpenAlert(index)}>
+									<IconButton color="secondary" onClick={ () => this.handleOpenAlert(index) }>
 										<DeleteForeverIcon />
 									</IconButton>
 								</ListItem>
@@ -82,7 +102,7 @@ class ShellList extends Component {
 					</ListItem>
 				</List>
 				<ShellCreateForm open={this.state.open} onClose={this.handleFormClose} />
-				<AlertDialog open={this.state.alert} onClose={this.handleFormClose} onAccept={this.handleAcceptAlert} />
+				<AlertDialog open={this.state.alert} onClose={this.handleAlertClose} onAccept={this.handleAcceptAlert} action="delete this shell" />
 			</div>
 		);
 	}

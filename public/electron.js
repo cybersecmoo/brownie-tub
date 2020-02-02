@@ -28,7 +28,6 @@ async function createWindow() {
   ipcMain.on("shell:create", async (event, shellDetails) => {
     try {
       await shellCollection.insert(shellDetails);
-      console.log("Inserted");
       event.reply("shell:create-reply", shellDetails);
     } catch (error) {
       console.error(error);
@@ -36,7 +35,16 @@ async function createWindow() {
     }
   });
 
-
+  ipcMain.on("shell:delete", async (event, shellDetails) => {
+    try {
+      const shell = await shellCollection.findOne().where("ipOrHostname").eq(shellDetails.ipOrHostname);
+      await shell.remove();
+      event.reply("shell:delete-reply");
+    } catch (error) {
+      console.error(error);
+      event.reply("shell:delete-error", error);
+    }
+  });
 
   // Listen for window being closed
   mainWindow.on("closed", () => {
