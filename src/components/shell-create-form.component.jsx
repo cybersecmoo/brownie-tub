@@ -14,8 +14,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
 import "./shell-list.css";
 
-const { ipcRenderer } = window.require("electron");
-
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
@@ -30,7 +28,7 @@ const ShellCreateForm = (props) => {
 	const classes = useStyles();
 	const [state, setState] = React.useState({
 		ipOrHostname: "",
-		paramType: "",
+		commandParamType: "",
 		commandParam: "",
 		passwordEnabled: false,
 		passwordParam: "",
@@ -41,7 +39,7 @@ const ShellCreateForm = (props) => {
 
 	const handleSubmit = () => {
 		console.log(state);
-		ipcRenderer.send("shell:create", state);
+		window.ipcRenderer.send("shell:create", state);
 		props.onClose();
 	}
 
@@ -70,7 +68,7 @@ const ShellCreateForm = (props) => {
 							labelId="commandParamType-label"
 							id="commandParamType"
 							value={state.paramType}
-							onChange={handleStringChanged("paramType")}
+							onChange={handleStringChanged("commandParamType")}
 						>
 							<MenuItem value="">
 								<em>None</em>
@@ -82,7 +80,7 @@ const ShellCreateForm = (props) => {
 						</Select>
 					</FormControl>
 					<FormControl className={classes.formControl}>
-						<TextField id="commandParam" label="Command Parameter" fullWidth />
+						<TextField id="commandParam" label="Command Parameter" onChange={handleStringChanged("commandParam")} fullWidth />
 					</FormControl>
 				</div>
 

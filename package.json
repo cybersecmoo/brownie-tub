@@ -1,6 +1,6 @@
 {
   "name": "brownie-tub",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "public/electron.js",
   "private": true,
   "homepage": "./",
@@ -30,6 +30,7 @@
   "devDependencies": {
     "electron": "^7.1.10",
     "electron-builder": "^22.3.2",
+    "node": "^12.14.1",
     "nodemon": "^2.0.2"
   },
   "dependencies": {
