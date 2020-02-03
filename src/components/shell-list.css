@@ -14,3 +14,17 @@ label.MuiFormControlLabel-root {
 	margin-top: 20px;
 	margin-left: 0px;
 }
+
+li.MuiListItem-root {
+	text-align: center;
+	justify-content: center;
+}
+
+div.MuiListItem-root {
+	text-align: center;
+	justify-content: center;
+}
+
+ul.MuiMenu-list, div.MuiPopover-paper {
+	width: 200px;
+}

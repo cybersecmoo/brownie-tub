@@ -32,7 +32,8 @@ const App = () => {
             <Grid item xs={2}>
               <ShellList />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={8}>
+              <div></div>
             </Grid>
             <Grid item xs={2}>
               <ShellDetailPanel />

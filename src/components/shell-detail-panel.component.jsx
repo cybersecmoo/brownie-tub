@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 
 class ShellDetailPanel extends Component {
-	// TODO Take the selected shell from the Redux state
 	render() {
 		var title = "";
 

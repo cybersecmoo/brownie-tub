@@ -111,7 +111,6 @@ class ShellList extends Component {
 						<ListItemIcon>
 							<AddIcon />
 						</ListItemIcon>
-						<ListItemText primary="Add New" />
 					</ListItem>
 				</List>
 				<ShellCreateForm open={this.state.open} onClose={this.handleFormClose} />
