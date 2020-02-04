@@ -9,6 +9,9 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import ShellCreateForm from "./shell-create-form.component";
 import AlertDialog from "./alert-dialog.component";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { selectShell } from "../redux/shells/shells.action";
 import "./shell-list.css";
 
 class ShellList extends Component {
@@ -25,6 +28,7 @@ class ShellList extends Component {
 		this.handleOpenAlert = this.handleOpenAlert.bind(this);
 		this.handleAlertClose = this.handleAlertClose.bind(this);
 		this.handleAcceptAlert = this.handleAcceptAlert.bind(this);
+		this.handleShellSelect = this.handleShellSelect.bind(this);
 
 		window.ipcRenderer.on("shell:create-reply", (event, shell) => {
 			var shellsList = this.state.shells;
@@ -55,6 +59,14 @@ class ShellList extends Component {
 		});
 	};
 
+	handleShellSelect(shell) {
+		try {
+			this.props.selectShell(shell);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	handleOpenAlert(index) {
 		this.setState({
 			alert: true,
@@ -80,9 +92,10 @@ class ShellList extends Component {
 				<List component="nav" aria-label="shells">
 					{
 						this.state.shells.map((shell, index) => {
+							// TODO On click, shoot off a redux action to set the selected shell
 							return (
 								<ListItem>
-									<IconButton color="default">
+									<IconButton color="default" onClick={ () => this.handleShellSelect(shell) }>
 										<ComputerIcon />
 									</IconButton>
 									<ListItemText primary={shell.ipOrHostname} />
@@ -98,7 +111,6 @@ class ShellList extends Component {
 						<ListItemIcon>
 							<AddIcon />
 						</ListItemIcon>
-						<ListItemText primary="Add New" />
 					</ListItem>
 				</List>
 				<ShellCreateForm open={this.state.open} onClose={this.handleFormClose} />
@@ -108,4 +120,8 @@ class ShellList extends Component {
 	}
 }
 
-export default ShellList;
+ShellList.propTypes = {
+	selectShell: PropTypes.func.isRequired,
+};
+
+export default connect(null, { selectShell })(ShellList);

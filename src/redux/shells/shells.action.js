@@ -1,5 +1,9 @@
-import { ipcRenderer } from "electron";
+import { SELECT_SHELL } from "../types";
 
-export const addShell = (shellDetails) =>  {
-	ipcRenderer.send("shell:create", shellDetails);
+export const selectShell = shell => dispatch => {
+	console.log(`Shell selected: ${shell}`);
+	dispatch({
+		type: SELECT_SHELL,
+		payload: shell
+	});
 };
