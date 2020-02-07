@@ -32,7 +32,6 @@ class ShellDetailPanel extends Component {
 				</Typography>
 			);
 			
-			// TODO make this a table?
 			return (
 				<div>
 					<Typography variant="h3">{this.props.shells.selectedShell.ipOrHostname}</Typography>

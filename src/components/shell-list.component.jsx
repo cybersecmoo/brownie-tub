@@ -62,6 +62,9 @@ class ShellList extends Component {
 	handleShellSelect(shell) {
 		try {
 			this.props.selectShell(shell);
+			// TODO send off request to determine OS
+			// TODO send off request to determine whether or not we are admin
+			// TODO send off request to list dir
 		} catch (error) {
 			console.log(error);
 		}
@@ -92,7 +95,6 @@ class ShellList extends Component {
 				<List component="nav" aria-label="shells">
 					{
 						this.state.shells.map((shell, index) => {
-							// TODO On click, shoot off a redux action to set the selected shell
 							return (
 								<ListItem>
 									<IconButton color="default" onClick={ () => this.handleShellSelect(shell) }>
