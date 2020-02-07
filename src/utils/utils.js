@@ -1,5 +1,5 @@
 import axios from "axios";
-import { WINDOWS } from "./osTypes";
+import { COMMAND_MAP } from "./reqTypes";
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -47,12 +47,8 @@ const generateConfig = (shell, command) => {
 	return config;
 }
 
-export const listDirectoryRequest = async (shell) => {
-	var command = "ls -la";
-
-	if(shell.os === WINDOWS) {
-		command = "dir";
-	}
+export const sendRequest = async (shell, reqType) => {
+	const command = COMMAND_MAP[reqType][shell.os];
 
 	const config = generateConfig(shell, command);
 	var response;
