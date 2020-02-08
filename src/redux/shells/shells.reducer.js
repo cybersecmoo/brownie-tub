@@ -1,4 +1,4 @@
-import { SELECT_SHELL, DIR } from "../types";
+import { SELECT_SHELL, DIR, OS } from "../types";
 
 const INITIAL_STATE = {
 	selectedShell: {},
@@ -20,6 +20,11 @@ const shellsReducer = (currentState = INITIAL_STATE, action) => {
 				dir: action.payload
 			};
 
+		case OS:
+			console.log("OS");
+			currentState.selectedShell.os = action.payload;
+			// TODO fire off an IPC call to update the entry in the database
+			return currentState;
 		default:
 			return currentState;
 	}

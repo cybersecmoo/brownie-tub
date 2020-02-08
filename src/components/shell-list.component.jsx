@@ -11,7 +11,7 @@ import ShellCreateForm from "./shell-create-form.component";
 import AlertDialog from "./alert-dialog.component";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { selectShell } from "../redux/shells/shells.action";
+import { selectShell, listCurrentDir, getOSType } from "../redux/shells/shells.action";
 import "./shell-list.css";
 
 class ShellList extends Component {
@@ -59,12 +59,12 @@ class ShellList extends Component {
 		});
 	};
 
-	handleShellSelect(shell) {
+	async handleShellSelect(shell) {
 		try {
 			this.props.selectShell(shell);
-			// TODO send off request to determine OS
+			await this.props.getOSType(shell);
+			await this.props.listCurrentDir(shell);
 			// TODO send off request to determine whether or not we are admin
-			// TODO send off request to list dir
 		} catch (error) {
 			console.log(error);
 		}
@@ -124,6 +124,8 @@ class ShellList extends Component {
 
 ShellList.propTypes = {
 	selectShell: PropTypes.func.isRequired,
+	listCurrentDir: PropTypes.func.isRequired,
+	getOSType: PropTypes.func.isRequired,
 };
 
-export default connect(null, { selectShell })(ShellList);
+export default connect(null, { selectShell, listCurrentDir, getOSType })(ShellList);

@@ -1,5 +1,5 @@
-import { SELECT_SHELL, DIR } from "../types";
-import { sendRequest } from "../../utils/utils";
+import { SELECT_SHELL, DIR, OS } from "../types";
+import { sendRequest, determineOS } from "../../utils/utils";
 import { LIST_DIR } from "../../utils/reqTypes";
 
 export const listCurrentDir = (shell) => async (dispatch) => {
@@ -7,6 +7,14 @@ export const listCurrentDir = (shell) => async (dispatch) => {
 	dispatch({
 		type: DIR,
 		payload: data
+	});
+}
+
+export const getOSType = (shell) => async (dispatch) => {
+	const os = await determineOS(shell);
+	dispatch({
+		type: OS,
+		payload: os
 	});
 }
 
