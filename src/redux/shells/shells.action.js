@@ -1,13 +1,16 @@
-import { SELECT_SHELL } from "../types";
-import { listDirectoryRequest } from "../../utils";
+import { SELECT_SHELL, DIR } from "../types";
+import { sendRequest } from "../../utils/utils";
+import { LIST_DIR } from "../../utils/reqTypes";
 
 export const listCurrentDir = (shell) => async (dispatch) => {
-	// TODO dispatch with type DIR to save the directory layout
-	await listDirectoryRequest(shell);
+	const data = await sendRequest(shell, LIST_DIR);
+	dispatch({
+		type: DIR,
+		payload: data
+	});
 }
 
 export const selectShell = shell => dispatch => {
-	console.log(`Shell selected: ${shell}`);
 	dispatch({
 		type: SELECT_SHELL,
 		payload: shell

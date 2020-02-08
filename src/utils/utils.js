@@ -1,5 +1,6 @@
 import axios from "axios";
 import { COMMAND_MAP } from "./reqTypes";
+import { WINDOWS, LINUX, MAC } from "./osTypes";
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -46,6 +47,32 @@ const generateConfig = (shell, command) => {
 	console.log(config);
 	return config;
 }
+
+export const determineOS = async (shell) => {
+	const command = "uname -a";
+
+	const config = generateConfig(shell, command);
+	var response;
+
+	if(shell.commandParamType === "POST") {
+		response = await axios.post(shell.ipOrHostname, config);
+	} else {
+		response = await axios.get(shell.ipOrHostname, config);
+	}
+
+	var os = LINUX;
+
+	// Windows does not have `uname`
+	if(response.data.body.includes("not recognized")) {
+		os = WINDOWS;
+	} else if(response.data.body.includes("Linux")) {
+		os = LINUX;
+	} else {
+		os = MAC;
+	}
+
+	return os;
+};
 
 export const sendRequest = async (shell, reqType) => {
 	const command = COMMAND_MAP[reqType][shell.os];
