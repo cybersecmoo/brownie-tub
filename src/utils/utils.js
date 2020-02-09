@@ -1,6 +1,6 @@
-import axios from "axios";
-import { COMMAND_MAP } from "./reqTypes";
-import { WINDOWS, LINUX, MAC } from "./osTypes";
+const axios = require("axios");
+const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
+const { WINDOWS, LINUX, MAC } = require("./osTypes");
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -70,21 +70,23 @@ const parseWindowsListDir = (listDirResponse) => {
 	const lines = listDirResponse.split(/\r?\n/);
 	var dir = [];
 
-	for(line in lines) {
-		// TODO Handle the current- and parent-directory entries
+	for(lineNo in lines) {
+		const line = lines[lineNo];
 		var file = {
 			type: "FILE",
 			name: ""
 		};
 
+		const nameRegex = /.*\s+([^\r\n]+)/gm;
+		file.name = nameRegex.exec(line);
+
 		if(line.includes("<DIR>")) {
 			file.type = "DIR";
 		}
 
-		const nameRegex = /.*\s+([^\r\n]+)/gm;
-		file.name = nameRegex.exec(line);
-
-		dir.push(file);
+		if(file.name) {
+			dir.push(file);
+		}
 	}
 
 	return dir;
@@ -93,21 +95,23 @@ const parseWindowsListDir = (listDirResponse) => {
 const parseUnixListDir = (listDirResponse) => {
 
 	for(line in lines) {
-		// TODO Handle the current- and parent-directory entries
-		// TODO Determine whether or not the file is a directory (indicated by a `d` in the flags section)
 	}
 
 }
 
-export const parseListDirResponse = (listDirResponse, os) => {
+const parseListDirResponse = (listDirResponse, os) => {
+	var dir;
+
 	if(os === WINDOWS) {
-		parseWindowsListDir(listDirResponse);
+		dir = parseWindowsListDir(listDirResponse);
 	} else {
-		parseUnixListDir(listDirResponse);
+		dir = parseUnixListDir(listDirResponse);
 	}
+
+	return dir;
 }
 
-export const determineOS = async (shell) => {
+const determineOS = async (shell) => {
 	const command = encodeCommand("uname -a", shell.commandEncoding);
 
 	const config = generateConfig(shell, command);
@@ -133,7 +137,7 @@ export const determineOS = async (shell) => {
 	return os;
 };
 
-export const sendRequest = async (shell, reqType) => {
+const sendRequest = async (shell, reqType) => {
 	var command = COMMAND_MAP[reqType][shell.os];
 	command = encodeCommand(command, shell.commandEncoding);
 
@@ -149,4 +153,4 @@ export const sendRequest = async (shell, reqType) => {
 	return response;
 }
 
-// TODO Make a fn to parse list-dir responses (using operating system info to determine how to work out which ones are dirs and which are files)
+module.exports = { sendRequest, determineOS, parseListDirResponse };

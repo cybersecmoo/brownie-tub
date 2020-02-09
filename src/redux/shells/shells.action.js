@@ -4,7 +4,7 @@ import { LIST_DIR } from "../../utils/reqTypes";
 
 export const listCurrentDir = (shell) => async (dispatch) => {
 	const data = await sendRequest(shell, LIST_DIR);
-	const dir = await parseListDirResponse(data, shell.os);
+	const dir = parseListDirResponse(data, shell.os);
 
 	dispatch({
 		type: DIR,

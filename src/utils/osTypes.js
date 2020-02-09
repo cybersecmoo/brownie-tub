@@ -1,3 +1,5 @@
-export const WINDOWS = "WINDOWS";
-export const MAC = "MAC";
-export const LINUX = "LINUX";
+const WINDOWS = "WINDOWS";
+const MAC = "MAC";
+const LINUX = "LINUX";
+
+module.exports = { WINDOWS, MAC, LINUX };
