@@ -71,6 +71,11 @@ const parseWindowsListDir = (listDirResponse) => {
 	var dir = [];
 
 	for(const lineNo in lines) {
+		// First three lines of content are gumph about the volume and the directory name
+		if(lineNo < 3) {
+			continue;
+		}
+
 		const line = lines[lineNo];
 		var file = {
 			type: "FILE",
@@ -78,7 +83,11 @@ const parseWindowsListDir = (listDirResponse) => {
 		};
 
 		const nameRegex = /.*\s+([^\r\n]+)/gm;
-		file.name = nameRegex.exec(line);
+		const match = nameRegex.exec(line);
+
+		if(match && match.length > 0) {
+			file.name = match[1];
+		}
 
 		if(line.includes("<DIR>")) {
 			file.type = "DIR";

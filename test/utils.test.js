@@ -12,6 +12,6 @@ describe("Test utility functions", () => {
 				name: "."
 			}
 		];
-		assert.equal(dir, expected);
+		assert.deepEqual(dir, expected);
 	});
 });
