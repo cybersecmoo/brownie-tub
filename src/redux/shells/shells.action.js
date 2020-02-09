@@ -1,6 +1,6 @@
-import { SELECT_SHELL, DIR, OS } from "../types";
-import { sendRequest, determineOS, parseListDirResponse } from "../../utils/utils";
-import { LIST_DIR } from "../../utils/reqTypes";
+const { SELECT_SHELL, DIR, OS } = require("../types");
+const { sendRequest, determineOS, parseListDirResponse } = require("../../utils/utils");
+const { LIST_DIR } = require("../../utils/reqTypes");
 
 export const listCurrentDir = (shell) => async (dispatch) => {
 	const data = await sendRequest(shell, LIST_DIR);

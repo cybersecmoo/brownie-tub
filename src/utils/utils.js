@@ -70,7 +70,7 @@ const parseWindowsListDir = (listDirResponse) => {
 	const lines = listDirResponse.split(/\r?\n/);
 	var dir = [];
 
-	for(lineNo in lines) {
+	for(const lineNo in lines) {
 		const line = lines[lineNo];
 		var file = {
 			type: "FILE",
@@ -93,9 +93,6 @@ const parseWindowsListDir = (listDirResponse) => {
 }
 
 const parseUnixListDir = (listDirResponse) => {
-
-	for(line in lines) {
-	}
 
 }
 
