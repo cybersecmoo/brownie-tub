@@ -21,8 +21,6 @@ const createDatabase = async (name, adapter) => {
 			adapter: adapter
 		});
 
-		console.log("Creating Shell Collection...");
-
 		await db.collection({
 			name: "shells",
 			schema: WebShellSchema
