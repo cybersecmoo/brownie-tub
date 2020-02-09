@@ -42,6 +42,9 @@ const generateConfig = (shell, command) => {
 			}
 
 			break;
+		default:
+			console.error("Invalid param type!");
+			break;
 	}
 	
 	console.log(config);
