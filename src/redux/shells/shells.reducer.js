@@ -1,4 +1,5 @@
 import { SELECT_SHELL, DIR, OS } from "../types";
+import { ipcRenderer } from "electron";
 
 const INITIAL_STATE = {
 	selectedShell: {},
@@ -23,7 +24,7 @@ const shellsReducer = (currentState = INITIAL_STATE, action) => {
 		case OS:
 			console.log("OS");
 			currentState.selectedShell.os = action.payload;
-			// TODO fire off an IPC call to update the entry in the database
+			ipcRenderer.send("shell:update", currentState.selectedShell);
 			return currentState;
 		default:
 			return currentState;

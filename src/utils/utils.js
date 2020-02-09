@@ -66,6 +66,47 @@ const encodeCommand = (command, shellEncoding) => {
 	return encoded;
 }
 
+const parseWindowsListDir = (listDirResponse) => {
+	const lines = listDirResponse.split(/\r?\n/);
+	var dir = [];
+
+	for(line in lines) {
+		// TODO Handle the current- and parent-directory entries
+		var file = {
+			type: "FILE",
+			name: ""
+		};
+
+		if(line.includes("<DIR>")) {
+			file.type = "DIR";
+		}
+
+		const nameRegex = /.*\s+([^\r\n]+)/gm;
+		file.name = nameRegex.exec(line);
+
+		dir.push(file);
+	}
+
+	return dir;
+}
+
+const parseUnixListDir = (listDirResponse) => {
+
+	for(line in lines) {
+		// TODO Handle the current- and parent-directory entries
+		// TODO Determine whether or not the file is a directory (indicated by a `d` in the flags section)
+	}
+
+}
+
+export const parseListDirResponse = (listDirResponse, os) => {
+	if(os === WINDOWS) {
+		parseWindowsListDir(listDirResponse);
+	} else {
+		parseUnixListDir(listDirResponse);
+	}
+}
+
 export const determineOS = async (shell) => {
 	const command = encodeCommand("uname -a", shell.commandEncoding);
 

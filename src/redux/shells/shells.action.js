@@ -1,12 +1,14 @@
 import { SELECT_SHELL, DIR, OS } from "../types";
-import { sendRequest, determineOS } from "../../utils/utils";
+import { sendRequest, determineOS, parseListDirResponse } from "../../utils/utils";
 import { LIST_DIR } from "../../utils/reqTypes";
 
 export const listCurrentDir = (shell) => async (dispatch) => {
 	const data = await sendRequest(shell, LIST_DIR);
+	const dir = await parseListDirResponse(data, shell.os);
+
 	dispatch({
 		type: DIR,
-		payload: data
+		payload: dir
 	});
 }
 
