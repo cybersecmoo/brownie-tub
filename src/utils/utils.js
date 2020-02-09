@@ -51,8 +51,23 @@ const generateConfig = (shell, command) => {
 	return config;
 }
 
+const encodeCommand = (command, shellEncoding) => {
+	var encoded = command;
+
+	switch(shellEncoding) {
+		case "base64":
+			encoded = btoa(command);
+			break;
+		default:
+			console.error("Unsupported command encoding!");
+			break;
+	}
+
+	return encoded;
+}
+
 export const determineOS = async (shell) => {
-	const command = "uname -a";
+	const command = encodeCommand("uname -a", shell.commandEncoding);
 
 	const config = generateConfig(shell, command);
 	var response;
@@ -78,7 +93,8 @@ export const determineOS = async (shell) => {
 };
 
 export const sendRequest = async (shell, reqType) => {
-	const command = COMMAND_MAP[reqType][shell.os];
+	var command = COMMAND_MAP[reqType][shell.os];
+	command = encodeCommand(command, shell.commandEncoding);
 
 	const config = generateConfig(shell, command);
 	var response;

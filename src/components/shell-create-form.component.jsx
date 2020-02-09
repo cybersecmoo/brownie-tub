@@ -32,6 +32,7 @@ class ShellCreateForm extends Component {
 			ipOrHostname: "",
 			commandParamType: "",
 			commandParam: "",
+			commandEncoding: "",
 			passwordEnabled: false,
 			passwordParam: "",
 			password: "",
@@ -80,13 +81,22 @@ class ShellCreateForm extends Component {
 								value={this.state.paramType}
 								onChange={this.handleStringChanged("commandParamType")}
 							>
-								<MenuItem value="">
-									<em>None</em>
-								</MenuItem>
 								<MenuItem value={"header"}>Header</MenuItem>
 								<MenuItem value={"cookie"}>Cookie</MenuItem>
 								<MenuItem value={"POST"}>POST Param</MenuItem>
 								<MenuItem value={"GET"}>GET Param</MenuItem>
+							</Select>
+						</FormControl>
+						<FormControl className={classes.formControl}>
+							<InputLabel id="commandEncoding-label">Encoding</InputLabel>
+							<Select
+								labelId="commandEncoding-label"
+								id="commandEncoding"
+								value={this.state.paramType}
+								onChange={this.handleStringChanged("commandEncoding")}
+							>
+								<MenuItem value="None">None</MenuItem>
+								<MenuItem value={"base64"}>Base64</MenuItem>
 							</Select>
 						</FormControl>
 						<FormControl className={classes.formControl}>

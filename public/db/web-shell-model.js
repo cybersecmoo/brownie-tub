@@ -15,6 +15,10 @@ const WebShellSchema = {
 		commandParam: {
 			type: "string"
 		},
+		commandEncoding: {
+			type: "string",
+			enum: ["base64", "None"]
+		},
 		passwordEnabled: {
 			type: "boolean",
 			default: false

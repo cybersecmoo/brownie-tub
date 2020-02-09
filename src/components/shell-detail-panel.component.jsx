@@ -8,7 +8,7 @@ class ShellDetailPanel extends Component {
     if (this.props.shells.selectedShell.ipOrHostname !== undefined && this.props.shells.selectedShell.ipOrHostname !== null) {
 			const commandElement = (
 					<Typography variant="p">
-						Command {this.props.shells.selectedShell.commandParamType} param: {this.props.shells.selectedShell.commandParam}
+						Command {this.props.shells.selectedShell.commandParamType} param: {this.props.shells.selectedShell.commandParam} (encoded with {this.props.shells.selectedShell.commandEncoding})
 					</Typography>
 			);
 
