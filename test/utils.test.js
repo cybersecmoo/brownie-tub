@@ -46,19 +46,23 @@ describe("Test directory parsing - Windows", () => {
 
 describe("Test directory parsing - Unix", () => {
 	it("Should identify a directory in a Unix listing", () => {
-		const listing = "";
+		const listing = "drwxr-xr-x  3 lowuser lowuser 4096 Feb 16 01:01 .\ndrwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 ..\n";
 		const dir = utils.parseListDirResponse(listing, "LINUX");
 		const expected = [
 			{
 				type: "DIR",
 				name: "."
+			},
+			{
+				type: "DIR",
+				name: ".."
 			}
 		];
 		assert.deepEqual(dir, expected);
 	});
 
 	it("Should identify a file in a Unix listing", () => {
-		const listing = "";
+		const listing = "-rwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 appveyor.yml\n";
 		const dir = utils.parseListDirResponse(listing, "LINUX");
 		const expected = [
 			{
@@ -70,7 +74,7 @@ describe("Test directory parsing - Unix", () => {
 	});
 
 	it("Should identify a file and a directory in a Unix listing", () => {
-		const listing = "";
+		const listing = "drwxr-xr-x  3 lowuser lowuser 4096 Feb 16 01:01 .vscode\n-rwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 appveyor.yml\n";
 		const dir = utils.parseListDirResponse(listing, "MAC");
 		const expected = [
 			{
