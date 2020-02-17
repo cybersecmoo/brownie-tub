@@ -9,8 +9,8 @@ class ShellDetailPanel extends Component {
 			selectedShell: null
 		};	
 
-		window.ipcRenderer.on("shell:select-reply", (event, shell) => {
-			this.setState({selectedShell: shell});
+		window.ipcRenderer.on("shell:select-reply", (event, response) => {
+			this.setState({selectedShell: response.shell});
 		});
 	}
 

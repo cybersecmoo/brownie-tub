@@ -1,5 +1,5 @@
 // Tests the utils functions
-const utils = require("../src/utils/utils");
+const utils = require("../public/utils/utils");
 const assert = require("assert");
 
 describe("Test directory parsing - Windows", () => {
