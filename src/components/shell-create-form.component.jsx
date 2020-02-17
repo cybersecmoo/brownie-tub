@@ -46,7 +46,6 @@ class ShellCreateForm extends Component {
 	}
 
 	handleSubmit = () => {
-		console.log(this.state);
 		window.ipcRenderer.send("shell:create", this.state);
 		this.props.onClose();
 	}

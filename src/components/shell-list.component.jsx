@@ -9,9 +9,6 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import ShellCreateForm from "./shell-create-form.component";
 import AlertDialog from "./alert-dialog.component";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { selectShell, listCurrentDir, getOSType } from "../redux/shells/shells.action";
 import "./shell-list.css";
 
 class ShellList extends Component {
@@ -61,10 +58,7 @@ class ShellList extends Component {
 
 	async handleShellSelect(shell) {
 		try {
-			this.props.selectShell(shell);
-			await this.props.getOSType(shell);
-			await this.props.listCurrentDir(shell);
-			// TODO send off request to determine whether or not we are admin
+			window.ipcRenderer.send("shell:select", shell);
 		} catch (error) {
 			console.log(error);
 		}
@@ -122,10 +116,4 @@ class ShellList extends Component {
 	}
 }
 
-ShellList.propTypes = {
-	selectShell: PropTypes.func.isRequired,
-	listCurrentDir: PropTypes.func.isRequired,
-	getOSType: PropTypes.func.isRequired,
-};
-
-export default connect(null, { selectShell, listCurrentDir, getOSType })(ShellList);
+export default ShellList;

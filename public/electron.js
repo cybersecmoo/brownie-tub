@@ -39,7 +39,6 @@ async function createWindow() {
     try {
       const shell = await shellCollection.findOne().where("ipOrHostname").eq(shellDetails.ipOrHostname);
       await shell.remove();
-      console.log("Shell Deleted");
       event.reply("shell:delete-reply");
     } catch (error) {
       console.error(error);
@@ -51,10 +50,21 @@ async function createWindow() {
     try {
       const shell = await shellCollection.findOne().where("ipOrHostname").eq(shellDetails.ipOrHostname);
       await shell.update({$set: shellDetails});
-      console.log("Shell Updated");
     } catch (error) {
       console.error(error);
       event.reply("shell:delete-error", error);
+    }
+  });
+
+  ipcMain.on("shell:select", async (event, shellDetails) => {
+    try {
+      // TODO: OS Determination
+      // TODO: Dir 
+      // TODO: Admin determination
+      event.reply("shell:select-reply", shellDetails);
+    } catch (error) {
+      console.error(error);
+      event.reply("shell:select-error", error);
     }
   });
 
