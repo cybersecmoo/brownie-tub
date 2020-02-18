@@ -22,7 +22,7 @@ class DirectoryView extends Component {
 			<List aria-label="directory">
 				{
 					this.state.dir.map((entry, index) => {
-						if(entry.type == "DIR") {
+						if(entry.type === "DIR") {
 							return (
 								<ListItem button>
 									<FolderIcon />
