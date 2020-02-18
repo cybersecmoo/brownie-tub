@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "main": "public/electron.js",
   "private": true,
+  "author": "cybersecmoo <50770700+cybersecmoo@users.noreply.github.com>",
   "homepage": "./",
   "build": {
     "productName": "BROWNIE TUB",
