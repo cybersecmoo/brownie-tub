@@ -1,6 +1,10 @@
 platform:
   - x64
 
+image:
+  - Visual Studio 2019
+  - Ubuntu
+
 branches:
   only:
     - master
