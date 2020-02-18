@@ -1,6 +1,6 @@
-export const LIST_DIR = "LIST_DIR";
-export const GET_USER = "GET_USER";
-export const COMMAND_MAP = {
+const LIST_DIR = "LIST_DIR";
+const GET_USER = "GET_USER";
+const COMMAND_MAP = {
 	LIST_DIR: {
 		WINDOWS: "dir",
 		LINUX: "ls -la",
@@ -12,3 +12,5 @@ export const COMMAND_MAP = {
 		MAC: "whoami"
 	}
 };
+
+module.exports = { LIST_DIR, GET_USER, COMMAND_MAP };

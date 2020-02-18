@@ -1,6 +1,7 @@
-import axios from "axios";
-import { COMMAND_MAP } from "./reqTypes";
-import { WINDOWS, LINUX, MAC } from "./osTypes";
+const axios = require("axios");
+const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
+const { LIST_DIR } = require("./reqTypes");
+const { parseListDirResponse } = require("./utils");
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -51,8 +52,46 @@ const generateConfig = (shell, command) => {
 	return config;
 }
 
-export const determineOS = async (shell) => {
-	const command = "uname -a";
+const encodeCommand = (command, shellEncoding) => {
+	var encoded = command;
+
+	switch(shellEncoding) {
+		case "base64":
+			encoded = btoa(command);
+			break;
+		default:
+			console.error("Unsupported command encoding!");
+			break;
+	}
+
+	return encoded;
+}
+
+const sendRequest = async (shell, reqType) => {
+	var command = COMMAND_MAP[reqType][shell.os];
+	command = encodeCommand(command, shell.commandEncoding);
+
+	const config = generateConfig(shell, command);
+	var response;
+
+	if(shell.commandParamType === "POST") {
+		response = await axios.post(shell.ipOrHostname, config);
+	} else {
+		response = await axios.get(shell.ipOrHostname, config);
+	}
+
+	return response;
+}
+
+const listDir = async (shell) => {
+	const response = await sendRequest(shell, LIST_DIR);
+	const dir = parseListDirResponse(response);
+
+	return dir;
+}
+
+const determineOS = async (shell) => {
+	const command = encodeCommand("uname -a", shell.commandEncoding);
 
 	const config = generateConfig(shell, command);
 	var response;
@@ -77,19 +116,4 @@ export const determineOS = async (shell) => {
 	return os;
 };
 
-export const sendRequest = async (shell, reqType) => {
-	const command = COMMAND_MAP[reqType][shell.os];
-
-	const config = generateConfig(shell, command);
-	var response;
-
-	if(shell.commandParamType === "POST") {
-		response = await axios.post(shell.ipOrHostname, config);
-	} else {
-		response = await axios.get(shell.ipOrHostname, config);
-	}
-
-	return response;
-}
-
-// TODO Make a fn to parse list-dir responses (using operating system info to determine how to work out which ones are dirs and which are files)
+module.exports = { sendRequest, determineOS, listDir }

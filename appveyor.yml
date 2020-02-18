@@ -4,15 +4,12 @@ platform:
 branches:
   only:
     - master
-
 install:
   - ps: Install-Product node Current x64
   - npm install npm -g
   - npm install -g electron-builder
   - npm install
-
 test_script:
   - npm run test
-
 build_script:
   - npm run electron-pack

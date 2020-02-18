@@ -1,40 +1,50 @@
 import React, { Component } from "react";
 import { Typography } from "@material-ui/core";
-import { connect } from "react-redux";
 import "./shell-details.css";
 
 class ShellDetailPanel extends Component {
+	constructor(props) {
+		super(props);	
+		this.state = {
+			selectedShell: null
+		};	
+
+		window.ipcRenderer.on("shell:select-reply", (event, response) => {
+			this.setState({selectedShell: response.shell});
+		});
+	}
+
   render() {
-    if (this.props.shells.selectedShell.ipOrHostname !== undefined && this.props.shells.selectedShell.ipOrHostname !== null) {
+    if (this.state.selectedShell !== null) {
 			const commandElement = (
 					<Typography variant="p">
-						Command {this.props.shells.selectedShell.commandParamType} param: {this.props.shells.selectedShell.commandParam}
+						Command {this.state.selectedShell.commandParamType} param: {this.state.selectedShell.commandParam} (encoded with {this.state.selectedShell.commandEncoding})
 					</Typography>
 			);
 
 			var passwordElement = null;
 
-			if(this.props.shells.selectedShell.passwordEnabled === true) {
+			if(this.state.selectedShell.passwordEnabled === true) {
 				passwordElement = (
 					<Typography variant="p">
-						Password param: {this.props.shells.selectedShell.passwordParam}
+						Password param: {this.state.selectedShell.passwordParam}
 						<br />
-						Password: {this.props.shells.selectedShell.password}
+						Password: {this.state.selectedShell.password}
 					</Typography>
 				);
 			}
 
 			const osElement = (
 				<Typography variant="p">
-					OS: {this.props.shells.selectedShell.os}
+					OS: {this.state.selectedShell.os}
 					<br />
-					Is Admin: {this.props.shells.selectedShell.isAdmin.toString()}
+					Is Admin: {this.state.selectedShell.isAdmin.toString()}
 				</Typography>
 			);
 			
 			return (
 				<div>
-					<Typography variant="h3">{this.props.shells.selectedShell.ipOrHostname}</Typography>
+					<Typography variant="h3">{this.state.selectedShell.ipOrHostname}</Typography>
 					<br />
 					{ commandElement }
 					<br />
@@ -49,8 +59,4 @@ class ShellDetailPanel extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  shells: state.shells
-});
-
-export default connect(mapStateToProps, null)(ShellDetailPanel);
+export default ShellDetailPanel;
