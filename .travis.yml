@@ -16,6 +16,8 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
+      language: node_js
+      node_js: "13.8.0"
       services: docker
       language: generic
 
