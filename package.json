@@ -59,7 +59,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "electron-start": "npm run build && electron .",
-    "preelectron-pack": "npm run build && electron-rebuild",
+    "postinstall": "electron-builder install-app-deps && electron-rebuild",
+    "preelectron-pack": "npm run build",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
     "release": "electron-builder -c.extraMetadata.main=build/electron.js"
   },
