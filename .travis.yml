@@ -9,8 +9,6 @@ matrix:
       dist: trusty
       sudo: required
 
-    - os: windows
-
 notifications:
   email: false
 
@@ -20,9 +18,6 @@ cache:
     - node_modules
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
-
-before_install:
-  - npm i -g npm@latest
 
 deploy:
   provider: script
