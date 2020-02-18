@@ -31,6 +31,7 @@
   "devDependencies": {
     "electron": "^7.1.10",
     "electron-builder": "^22.3.2",
+    "electron-rebuild": "^1.10.0",
     "install": "^0.13.0",
     "mocha": "^7.0.1",
     "node": "^13.8.0",
@@ -58,7 +59,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "electron-start": "npm run build && electron .",
-    "preelectron-pack": "npm run build",
+    "preelectron-pack": "npm run build && electron-rebuild",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
     "release": "electron-builder -c.extraMetadata.main=build/electron.js"
   },

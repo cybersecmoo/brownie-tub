@@ -1,7 +1,7 @@
 # BROWNIE TUB
 
 [![Known Vulnerabilities](https://snyk.io/test/github/cybersecmoo/brownie-tub/badge.svg?targetFile=package.json)](https://snyk.io/test/github/cybersecmoo/brownie-tub?targetFile=package.json)
-![AppVeyor](https://img.shields.io/appveyor/ci/cybersecmoo/brownie-tub)
+[![Build Status](https://travis-ci.com/cybersecmoo/brownie-tub.svg?branch=master)](https://travis-ci.com/cybersecmoo/brownie-tub)
 ![GitHub issues](https://img.shields.io/github/issues/cybersecmoo/brownie-tub)
 
 ## A Standalone Web Shell Client ##
