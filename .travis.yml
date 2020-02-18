@@ -21,6 +21,9 @@ cache:
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 
+before_install:
+  - npm i -g npm@latest
+
 deploy:
   provider: script
   script: npm run electron-pack
