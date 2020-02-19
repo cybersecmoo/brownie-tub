@@ -15,6 +15,12 @@ label.MuiFormControlLabel-root {
 	margin-left: 0px;
 }
 
+div.MuiFormControl-root {
+	margin: 10px;
+	min-width: 120px;
+	vertical-align: baseline;
+}
+
 li.MuiListItem-root {
 	text-align: center;
 	justify-content: center;

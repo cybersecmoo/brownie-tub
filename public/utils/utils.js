@@ -43,6 +43,11 @@ const parseUnixListDir = (listDirResponse) => {
 	var dir = [];
 
 	for(const lineNo in lines) {
+		// The first line in the output is the "total N" one, which we don't want.
+		if(lineNo < 1) {
+			continue;
+		}
+		
 		const line = lines[lineNo];
 		var file = {
 			type: "FILE",

