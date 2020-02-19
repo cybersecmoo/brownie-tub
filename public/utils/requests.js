@@ -7,7 +7,9 @@ const generateConfig = (shell, command) => {
 	var config = {
 		headers: {
 			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
-		}
+		},
+		params: {},
+		data: {}
 	};
 
 	switch(shell.commandParamType) {
@@ -57,7 +59,7 @@ const encodeCommand = (command, shellEncoding) => {
 
 	switch(shellEncoding) {
 		case "base64":
-			encoded = btoa(command);
+			encoded = Buffer.from(command).toString("base64");
 			break;
 		default:
 			console.error("Unsupported command encoding!");
@@ -116,4 +118,4 @@ const determineOS = async (shell) => {
 	return os;
 };
 
-module.exports = { sendRequest, determineOS, listDir }
+module.exports = { sendRequest, determineOS, listDir };

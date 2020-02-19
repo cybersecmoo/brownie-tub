@@ -11,19 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import "./shell-list.css";
-
-const styles = theme => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-});
 
 class ShellCreateForm extends Component {
 	constructor(props) {
@@ -66,13 +55,13 @@ class ShellCreateForm extends Component {
 				<DialogContent>
 					<DialogTitle>Register a New Shell</DialogTitle>
 					<div>
-						<FormControl className={classes.formControl}>
+						<FormControl>
 							<TextField autoFocus id="ipOrHostname" label="IP or URL" onChange={this.handleStringChanged("ipOrHostname")} fullWidth />
 						</FormControl>
 					</div>
 					
 					<div>
-						<FormControl className={classes.formControl}>
+						<FormControl>
 							<InputLabel id="commandParamType-label">Param Type</InputLabel>
 							<Select
 								labelId="commandParamType-label"
@@ -86,7 +75,7 @@ class ShellCreateForm extends Component {
 								<MenuItem value={"GET"}>GET Param</MenuItem>
 							</Select>
 						</FormControl>
-						<FormControl className={classes.formControl}>
+						<FormControl>
 							<InputLabel id="commandEncoding-label">Encoding</InputLabel>
 							<Select
 								labelId="commandEncoding-label"
@@ -98,7 +87,7 @@ class ShellCreateForm extends Component {
 								<MenuItem value={"base64"}>Base64</MenuItem>
 							</Select>
 						</FormControl>
-						<FormControl className={classes.formControl}>
+						<FormControl>
 							<TextField id="commandParam" label="Command Parameter" onChange={this.handleStringChanged("commandParam")} fullWidth />
 						</FormControl>
 					</div>
@@ -111,16 +100,16 @@ class ShellCreateForm extends Component {
 					</div>
 		
 					<div>
-						<FormControl className={classes.formControl}>
+						<FormControl>
 							<TextField id="passwordParam" label="Password Parameter" onChange={this.handleStringChanged("passwordParam")} fullWidth />
 						</FormControl>
-						<FormControl className={classes.formControl}>
+						<FormControl>
 							<TextField id="password" label="Password" onChange={this.handleStringChanged("password")} fullWidth />
 						</FormControl>
 					</div>
 	
 					<div>
-						<FormControl className={classes.formControl}>
+						<FormControl>
 							<TextField id="os" label="Operating System" onChange={this.handleStringChanged("os")} fullWidth />
 						</FormControl>
 					</div>
@@ -145,4 +134,4 @@ ShellCreateForm.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ShellCreateForm);
+export default ShellCreateForm;
