@@ -46,7 +46,7 @@ describe("Test directory parsing - Windows", () => {
 
 describe("Test directory parsing - Unix", () => {
 	it("Should identify a directory in a Unix listing", () => {
-		const listing = "drwxr-xr-x  3 lowuser lowuser 4096 Feb 16 01:01 .\ndrwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 ..\n";
+		const listing = "total 42\ndrwxr-xr-x  3 lowuser lowuser 4096 Feb 16 01:01 .\ndrwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 ..\n";
 		const dir = utils.parseListDirResponse(listing, "LINUX");
 		const expected = [
 			{
@@ -62,7 +62,7 @@ describe("Test directory parsing - Unix", () => {
 	});
 
 	it("Should identify a file in a Unix listing", () => {
-		const listing = "-rwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 appveyor.yml\n";
+		const listing = "total 115\n-rwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 appveyor.yml\n";
 		const dir = utils.parseListDirResponse(listing, "LINUX");
 		const expected = [
 			{
@@ -74,7 +74,7 @@ describe("Test directory parsing - Unix", () => {
 	});
 
 	it("Should identify a file and a directory in a Unix listing", () => {
-		const listing = "drwxr-xr-x  3 lowuser lowuser 4096 Feb 16 01:01 .vscode\n-rwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 appveyor.yml\n";
+		const listing = "total 10\ndrwxr-xr-x  3 lowuser lowuser 4096 Feb 16 01:01 .vscode\n-rwxr-xr-x 17 lowuser lowuser 4096 Feb 16 01:01 appveyor.yml\n";
 		const dir = utils.parseListDirResponse(listing, "MAC");
 		const expected = [
 			{
