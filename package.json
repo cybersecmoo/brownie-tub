@@ -55,6 +55,7 @@
   },
   "scripts": {
     "test": "mocha",
+    "clean": "rm shells* || del shells*",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "electron-start": "npm run build && electron .",

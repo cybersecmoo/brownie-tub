@@ -23,6 +23,7 @@ class ShellCreateForm extends Component {
 			commandParam: "",
 			commandEncoding: "",
 			passwordEnabled: false,
+			passwordParamType: "",
 			passwordParam: "",
 			password: "",
 			os: "",
@@ -99,24 +100,25 @@ class ShellCreateForm extends Component {
 		
 					<div>
 						<FormControl>
+							<InputLabel id="passwordParamType-label">Param Type</InputLabel>
+							<Select
+								labelId="passwordParamType-label"
+								id="passwordParamType"
+								value={this.state.paramType}
+								onChange={this.handleStringChanged("passwordParamType")}
+							>
+								<MenuItem value={"header"}>Header</MenuItem>
+								<MenuItem value={"cookie"}>Cookie</MenuItem>
+								<MenuItem value={"POST"}>POST Param</MenuItem>
+								<MenuItem value={"GET"}>GET Param</MenuItem>
+							</Select>
+						</FormControl>
+						<FormControl>
 							<TextField id="passwordParam" label="Password Parameter" onChange={this.handleStringChanged("passwordParam")} fullWidth />
 						</FormControl>
 						<FormControl>
 							<TextField id="password" label="Password" onChange={this.handleStringChanged("password")} fullWidth />
 						</FormControl>
-					</div>
-	
-					<div>
-						<FormControl>
-							<TextField id="os" label="Operating System" onChange={this.handleStringChanged("os")} fullWidth />
-						</FormControl>
-					</div>
-	
-					<div>
-						<FormControlLabel control={
-							<Checkbox checked={this.state.isAdmin} onChange={this.handleCheckboxChanged("isAdmin")} value="isAdmin" />
-						} 
-						label="Is Admin" />
 					</div>
 				</DialogContent>
 				<DialogActions>
