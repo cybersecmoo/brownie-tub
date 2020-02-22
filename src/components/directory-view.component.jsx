@@ -10,7 +10,16 @@ class DirectoryView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dir: []
+			dir: [
+				{
+					type: "DIR",
+					name: "exampleDir"
+				},
+				{
+					type: "FILE",
+					name: "exampleFile"
+				}
+			]
 		};
 
 		window.ipcRenderer.on("shell:select-reply", (event, response) => {
@@ -20,7 +29,7 @@ class DirectoryView extends Component {
 
 	render() {
 		return (
-			<List aria-label="directory">
+			<List className="dir-view" aria-label="directory">
 				{
 					this.state.dir.map((entry, index) => {
 						if(entry.type === "DIR") {
