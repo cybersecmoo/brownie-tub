@@ -1,4 +1,4 @@
-li.MuiListItem-root, div.MuiListItem-root {
+ul.dir-view > li.MuiListItem-root, ul.dir-view > div.MuiListItem-root {
 	text-align: left;
 	justify-content: left;
 }
