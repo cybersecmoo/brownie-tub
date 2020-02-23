@@ -23,7 +23,7 @@ class ShellCreateForm extends Component {
 			commandParam: "",
 			commandEncoding: "",
 			passwordEnabled: false,
-			passwordParamType: "",
+			passwordParamType: "none",
 			passwordParam: "",
 			password: "",
 			os: "",
@@ -104,9 +104,10 @@ class ShellCreateForm extends Component {
 							<Select
 								labelId="passwordParamType-label"
 								id="passwordParamType"
-								value={this.state.paramType}
+								value={this.state.passwordParamType}
 								onChange={this.handleStringChanged("passwordParamType")}
 							>
+								<MenuItem selected value={"none"}>None</MenuItem>
 								<MenuItem value={"header"}>Header</MenuItem>
 								<MenuItem value={"cookie"}>Cookie</MenuItem>
 								<MenuItem value={"POST"}>POST Param</MenuItem>

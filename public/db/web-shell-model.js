@@ -25,7 +25,7 @@ const WebShellSchema = {
 		},
 		passwordParamType: {
 			type: "string",
-			enum: ["header", "cookie", "POST", "GET"]
+			enum: ["none", "header", "cookie", "POST", "GET"]
 		},
 		passwordParam: {
 			type: "string"
