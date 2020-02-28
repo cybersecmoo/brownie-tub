@@ -11,7 +11,7 @@ class DirectoryView extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dirName = "",
+			dirName: "Directory",
 			dir: [
 				{
 					type: "DIR",
