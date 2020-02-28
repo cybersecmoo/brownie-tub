@@ -12,13 +12,6 @@ matrix:
 notifications:
   email: false
 
-cache:
-  yarn: true
-  directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
-
 deploy:
   provider: script
   script: npm run electron-pack
