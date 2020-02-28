@@ -16,12 +16,6 @@ const dark = createMuiTheme({
   },
 });
 
-const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-  }
-}));
-
 class App extends Component {
   constructor(props) {
 		super(props);
