@@ -7,7 +7,19 @@
 }
 
 div.MuiPaper-root {
-	width: 75%;
+	width: 100%;
+}
+
+.MuiDialog-paperWidthSm {
+	max-width: 700px !important;
+}
+
+.MuiDialogContent-root {
+	width: auto;
+}
+
+.MuiDialogActions-root {
+	justify-content: center !important;
 }
 
 label.MuiFormControlLabel-root {
@@ -33,4 +45,8 @@ div.MuiListItem-root {
 
 ul.MuiMenu-list, div.MuiPopover-paper {
 	width: 200px;
+}
+
+div.MuiAlert-root {
+	width: 300px;
 }

@@ -6,7 +6,7 @@ branches:
     - master
 install:
   - ps: Install-Product node Current x64
-  - npm install npm -g
+  - npm install npm@latest -g
   - npm install -g electron-builder
   - npm install
 test_script:

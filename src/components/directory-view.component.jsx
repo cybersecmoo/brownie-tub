@@ -32,7 +32,7 @@ class DirectoryView extends Component {
 	render() {
 		return (
 			<div>
-				<Typography variant="h3">{this.state.dirName}</Typography>
+				<Typography variant="h5">{this.state.dirName}</Typography>
 				<List className="dir-view" aria-label="directory">
 					{
 						this.state.dir.map((entry, index) => {
