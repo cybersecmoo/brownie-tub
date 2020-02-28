@@ -2,3 +2,7 @@ ul.dir-view > li.MuiListItem-root, ul.dir-view > div.MuiListItem-root {
 	text-align: left;
 	justify-content: left;
 }
+
+.MuiTypography-h5 {
+	text-align: center;
+}

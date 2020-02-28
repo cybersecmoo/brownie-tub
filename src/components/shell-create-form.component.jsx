@@ -55,14 +55,15 @@ class ShellCreateForm extends Component {
 					<DialogTitle>Register a New Shell</DialogTitle>
 					<div>
 						<FormControl>
-							<TextField autoFocus id="ipOrHostname" label="IP or URL" onChange={this.handleStringChanged("ipOrHostname")} fullWidth />
+							<TextField required autoFocus id="ipOrHostname" label="IP or URL" onChange={this.handleStringChanged("ipOrHostname")} fullWidth />
 						</FormControl>
 					</div>
 					
 					<div>
 						<FormControl>
-							<InputLabel id="commandParamType-label">Param Type</InputLabel>
+							<InputLabel required id="commandParamType-label">Param Type</InputLabel>
 							<Select
+								required 
 								labelId="commandParamType-label"
 								id="commandParamType"
 								value={this.state.paramType}
@@ -77,6 +78,7 @@ class ShellCreateForm extends Component {
 						<FormControl>
 							<InputLabel id="commandEncoding-label">Encoding</InputLabel>
 							<Select
+							  required 
 								labelId="commandEncoding-label"
 								id="commandEncoding"
 								value={this.state.paramType}
@@ -87,7 +89,7 @@ class ShellCreateForm extends Component {
 							</Select>
 						</FormControl>
 						<FormControl>
-							<TextField id="commandParam" label="Command Parameter" onChange={this.handleStringChanged("commandParam")} fullWidth />
+							<TextField required id="commandParam" label="Command Parameter" onChange={this.handleStringChanged("commandParam")} fullWidth />
 						</FormControl>
 					</div>
 	

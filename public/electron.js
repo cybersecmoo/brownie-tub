@@ -32,9 +32,10 @@ async function createWindow() {
     try {
       await shellCollection.insert(shellDetails);
       event.reply("shell:create-reply", shellDetails);
+      event.reply("misc:alert", {alertType: "success", alertMessage: "Shell created"});
     } catch (error) {
       console.error(error);
-      event.reply("shell:create-error", error);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to create shell!"});
     }
   });
 
@@ -43,9 +44,10 @@ async function createWindow() {
       const shell = await shellCollection.findOne().where("ipOrHostname").eq(shellDetails.ipOrHostname);
       await shell.remove();
       event.reply("shell:delete-reply");
+      event.reply("misc:alert", {alertType: "success", alertMessage: "Shell deleted"});
     } catch (error) {
       console.error(error);
-      event.reply("shell:delete-error", error);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to delete shell!"});
     }
   });
 
@@ -53,9 +55,10 @@ async function createWindow() {
     try {
       const shell = await shellCollection.findOne().where("ipOrHostname").eq(shellDetails.ipOrHostname);
       await shell.update({$set: shellDetails});
+      event.reply("misc:alert", {alertType: "success", alertMessage: "Shell updated"});
     } catch (error) {
       console.error(error);
-      event.reply("shell:delete-error", error);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to update shell!"});
     }
   });
 
@@ -68,7 +71,7 @@ async function createWindow() {
       event.reply("shell:select-reply", { shell: shellDetails, dir: dir, dirName: dirName });
     } catch (error) {
       console.error(error);
-      event.reply("shell:select-error", error);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to load shell details!"});
     }
   });
 
