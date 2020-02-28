@@ -1,8 +1,8 @@
 const axios = require("axios");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
-const { LIST_DIR } = require("./reqTypes");
+const { LIST_DIR, WORKING_DIR } = require("./reqTypes");
 const { WINDOWS, MAC, LINUX } = require("./osTypes");
-const { parseListDirResponse } = require("./utils");
+const { parseListDirResponse, parseWorkingDir } = require("./utils");
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -122,4 +122,11 @@ const determineOS = async (shell) => {
 	return os;
 };
 
-module.exports = { sendRequest, determineOS, listDir };
+const workingDir = async (shell) => {
+	const response = await sendRequest(shell, WORKING_DIR);
+	const dirName = parseWorkingDir(response.data);
+
+	return dirName;
+};
+
+module.exports = { sendRequest, determineOS, listDir, workingDir };

@@ -89,3 +89,19 @@ describe("Test directory parsing - Unix", () => {
 		assert.deepEqual(dir, expected);
 	});
 });
+
+describe("Test working-directory name parsing", () => {
+	it("Should identify the working directory name on Unix", () => {
+		const listing = "/home/user/stuff/otherStuff\n";
+		const dirName = utils.parseWorkingDir(listing);
+		const expected = "/home/user/stuff/otherStuff";
+		assert.equal(dirName, expected);
+	});
+
+	it("Should identify the working directory name on Windows", () => {
+		const listing = "C:\\Users\\User\\Documents\\stuff\r\n\r\n";
+		const dirName = utils.parseWorkingDir(listing);
+		const expected = "C:\\Users\\User\\Documents\\stuff";
+		assert.equal(dirName, expected);
+	});
+});

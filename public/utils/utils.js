@@ -85,4 +85,9 @@ const parseListDirResponse = (listDirResponse, os) => {
 	return dir;
 }
 
-module.exports = { parseListDirResponse };
+const parseWorkingDir = (workingDirResponse) => {
+	const lines = workingDirResponse.split(/\r?\n/);
+	return lines[0];
+}
+
+module.exports = { parseListDirResponse, parseWorkingDir };
