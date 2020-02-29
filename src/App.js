@@ -9,6 +9,7 @@ import ShellList from "./components/shell-list.component";
 import ShellDetailPanel from "./components/shell-detail-panel.component";
 import DirectoryView from "./components/directory-view.component";
 import { Component } from 'react';
+import Terminal from "./components/terminal.component";
 
 const dark = createMuiTheme({
   palette: {
@@ -39,8 +40,8 @@ class App extends Component {
     return (
       <ThemeProvider theme={dark}>
         <CssBaseline />
-        <div>
-          <Grid container>
+        <div className="main">
+          <Grid container className="row1">
             <Grid item xs={2}>
               <ShellList />
             </Grid>
@@ -50,6 +51,15 @@ class App extends Component {
             <Grid item xs={2}>
               <ShellDetailPanel />
             </Grid>
+          </Grid>
+          <Grid container className="row2">
+            <Grid item xs={2}>
+            </Grid>         
+            <Grid item xs={8}>
+              <Terminal />
+            </Grid>
+            <Grid item xs={2}>
+            </Grid>  
           </Grid>
           <Snackbar open={this.state.showAlert} autoHideDuration={6000} onClose={this.handleAlertClose}>
             <Alert severity={this.state.alertType} onClose={this.handleAlertClose}>
