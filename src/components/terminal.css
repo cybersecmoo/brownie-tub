@@ -1,3 +1,34 @@
 div.terminal {
-	color: green;
+	color: rgb(0, 202, 0);
+	height: 30vh;
+	background-color: black;
+	padding: 10px;
+	border: solid 1px darkgray;
+	border-radius: 5px;
+	font-family: 'Courier New', Courier, monospace;
+	overflow: auto;
+}
+
+.commandInput, .MuiInputBase-root {
+	background-color: transparent;
+	font-family: 'Courier New', Courier, monospace;
+	border: none;
+	width: 90%;
+	color: rgb(0, 202, 0);
+}
+
+#commandInput {
+	font-family: 'Courier New', Courier, monospace;
+	color: rgb(0, 202, 0);
+}
+
+.commandInput:focus {
+	border-width:0px;
+	border:none;
+	box-shadow: none;
+	padding: 3px;
+}
+
+.MuiInputBase-root::before, .MuiInputBase-root::after {
+	display: none;
 }
