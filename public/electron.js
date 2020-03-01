@@ -27,6 +27,7 @@ async function createWindow() {
 
   const db = await getDatabase("shells", "websql");
   const shellCollection = db.shells;
+  var selectedShell = null;
 
   ipcMain.on("shell:create", async (event, shellDetails) => {
     try {
@@ -64,11 +65,12 @@ async function createWindow() {
 
   ipcMain.on("shell:select", async (event, shellDetails) => {
     try {
+      selectedShell = shellDetails;
       // TODO: Admin determination
-      shellDetails.os = await determineOS(shellDetails);
-      const dir = await listDir(shellDetails);
-      const dirName = await workingDir(shellDetails);
-      event.reply("shell:select-reply", { shell: shellDetails, dir: dir, dirName: dirName });
+      selectedShell.os = await determineOS(selectedShell);
+      const dir = await listDir(selectedShell);
+      const dirName = await workingDir(selectedShell);
+      event.reply("shell:select-reply", { shell: selectedShell, dir: dir, dirName: dirName });
     } catch (error) {
       console.error(error);
       event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to load shell details!"});
