@@ -2,7 +2,8 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { getDatabase } = require("./db/setup-db");
-const { sendRequest, determineOS, listDir, workingDir } = require("./utils/requests");
+const { sendArbitraryCommand, determineOS, listDir, workingDir } = require("./utils/requests");
+const { parseMultiline } = require("./utils/utils");
 
 
 
@@ -75,6 +76,12 @@ async function createWindow() {
       console.error(error);
       event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to load shell details!"});
     }
+  });
+
+  ipcMain.on("terminal:command", async (event, command) => {
+    var output = await sendArbitraryCommand(selectedShell, command);
+    output = parseMultiline(output);
+    event.reply("terminal:command-reply", output);
   });
 
   // Listen for window being closed

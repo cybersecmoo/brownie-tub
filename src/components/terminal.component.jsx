@@ -21,7 +21,7 @@ class Terminal extends Component {
 		window.ipcRenderer.on("terminal:command-reply", (event, response) => {
 			var termLines = this.state.terminalLines;
 			var newCount = termLines.length;
-			response.lines.forEach(line => {
+			response.forEach(line => {
 				newCount = termLines.push(line);
 			});
 			
