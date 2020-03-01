@@ -54,20 +54,19 @@ class ShellCreateForm extends Component {
 				<DialogContent>
 					<DialogTitle>Register a New Shell</DialogTitle>
 					<div>
-						<FormControl>
-							<TextField required autoFocus id="ipOrHostname" label="IP or URL" onChange={this.handleStringChanged("ipOrHostname")} fullWidth />
-						</FormControl>
+						<TextField required autoFocus size="small" id="ipOrHostname" label="IP or URL" onChange={this.handleStringChanged("ipOrHostname")} fullWidth />
 					</div>
 					
 					<div>
 						<FormControl>
-							<InputLabel required id="commandParamType-label">Param Type</InputLabel>
+							<InputLabel required size="small" id="commandParamType-label">Param Type</InputLabel>
 							<Select
 								required 
 								labelId="commandParamType-label"
 								id="commandParamType"
 								value={this.state.paramType}
 								onChange={this.handleStringChanged("commandParamType")}
+								size="small" 
 							>
 								<MenuItem value={"header"}>Header</MenuItem>
 								<MenuItem value={"cookie"}>Cookie</MenuItem>
@@ -83,18 +82,17 @@ class ShellCreateForm extends Component {
 								id="commandEncoding"
 								value={this.state.paramType}
 								onChange={this.handleStringChanged("commandEncoding")}
+								size="small" 
 							>
 								<MenuItem value="None">None</MenuItem>
 								<MenuItem value={"base64"}>Base64</MenuItem>
 							</Select>
 						</FormControl>
-						<FormControl>
-							<TextField required id="commandParam" label="Command Parameter" onChange={this.handleStringChanged("commandParam")} fullWidth />
-						</FormControl>
+						<TextField required id="commandParam" size="small" label="Command Parameter" onChange={this.handleStringChanged("commandParam")} fullWidth />
 					</div>
 	
 					<div>
-						<FormControlLabel control={
+						<FormControlLabel size="small" control={
 							<Checkbox checked={this.state.passwordEnabled} onChange={this.handleCheckboxChanged("passwordEnabled")} value="passwordEnabled" />
 						} 
 						label="Enable Password" />
@@ -108,6 +106,7 @@ class ShellCreateForm extends Component {
 								id="passwordParamType"
 								value={this.state.passwordParamType}
 								onChange={this.handleStringChanged("passwordParamType")}
+								size="small"
 							>
 								<MenuItem selected value={"none"}>None</MenuItem>
 								<MenuItem value={"header"}>Header</MenuItem>
@@ -116,12 +115,8 @@ class ShellCreateForm extends Component {
 								<MenuItem value={"GET"}>GET Param</MenuItem>
 							</Select>
 						</FormControl>
-						<FormControl>
-							<TextField id="passwordParam" label="Password Parameter" onChange={this.handleStringChanged("passwordParam")} fullWidth />
-						</FormControl>
-						<FormControl>
-							<TextField id="password" label="Password" onChange={this.handleStringChanged("password")} fullWidth />
-						</FormControl>
+						<TextField id="passwordParam" label="Password Parameter" size="small" onChange={this.handleStringChanged("passwordParam")} fullWidth />
+						<TextField id="password" label="Password" size="small" onChange={this.handleStringChanged("password")} fullWidth />
 					</div>
 				</DialogContent>
 				<DialogActions>

@@ -1,7 +1,18 @@
 const { WINDOWS, LINUX, MAC } = require("./osTypes");
 
+/** 
+ * Uses a regex to split the input into its component lines
+ * 
+ * @param {String} multilineInput The data to split
+ * @exports 
+ */
+const parseMultiline = (multilineInput) => {
+	const lines = multilineInput.split(/\r?\n/);
+	return lines;
+}
+
 const parseWindowsListDir = (listDirResponse) => {
-	const lines = listDirResponse.split(/\r?\n/);
+	const lines = parseMultiline(listDirResponse);
 	var dir = [];
 
 	for(const lineNo in lines) {
@@ -39,7 +50,7 @@ const parseWindowsListDir = (listDirResponse) => {
 // NOTE This relies on parsing the output of `ls -la`, and is therefore not 100% reliable against crafted filenames. However, it should be fine against the vast 
 //	majority of files. Just be aware. 
 const parseUnixListDir = (listDirResponse) => {
-	const lines = listDirResponse.split(/\r?\n/);
+	const lines = parseMultiline(listDirResponse);
 	var dir = [];
 
 	for(const lineNo in lines) {
@@ -73,6 +84,13 @@ const parseUnixListDir = (listDirResponse) => {
 	return dir;
 }
 
+/** 
+ * Parses a directory listing, for Windows and Unix platforms
+ * 
+ * @param {Object} listDirResponse The output of the directory listing command
+ * @param {String} os The operating system used on the target
+ * @exports 
+ */
 const parseListDirResponse = (listDirResponse, os) => {
 	var dir;
 
@@ -85,9 +103,15 @@ const parseListDirResponse = (listDirResponse, os) => {
 	return dir;
 }
 
+/** 
+ * Parses the output of a working-directory request
+ * 
+ * @param {Object} workingDirResponse The output of the request to get the working directory
+ * @exports 
+ */
 const parseWorkingDir = (workingDirResponse) => {
-	const lines = workingDirResponse.split(/\r?\n/);
+	const lines = parseMultiline(workingDirResponse);
 	return lines[0];
 }
 
-module.exports = { parseListDirResponse, parseWorkingDir };
+module.exports = { parseMultiline, parseListDirResponse, parseWorkingDir };

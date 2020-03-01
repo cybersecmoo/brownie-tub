@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+div.main {
+  height: 100vh;
+}
+
+.row1 {
+  height: 67vh;
+}
+
+.row2 {
+  height: 33vh;
+}

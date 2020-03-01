@@ -73,22 +73,45 @@ const encodeCommand = (command, shellEncoding) => {
 	return encoded;
 }
 
+/** 
+ * Sends a predefined request type
+ * 
+ * @param {WebShellSchema} shell The details of the selected shell
+ * @param {String} reqType The name of the request type, as defined in `reqTypes.js`
+ * @exports 
+ */
 const sendRequest = async (shell, reqType) => {
 	var command = COMMAND_MAP[reqType][shell.os];
-	command = encodeCommand(command, shell.commandEncoding);
-
-	const config = generateConfig(shell, command);
-	var response;
-
-	if(shell.commandParamType === "POST") {
-		response = await axios.post(shell.ipOrHostname, config);
-	} else {
-		response = await axios.get(shell.ipOrHostname, config);
-	}
-
-	return response;
+	return sendArbitraryCommand(shell, command);
 }
 
+/** @exports */
+const sendArbitraryCommand = async (shell, command) => {
+	try {
+		var request = encodeCommand(command, shell.commandEncoding);
+
+		const config = generateConfig(shell, request);
+		var response;
+
+		if(shell.commandParamType === "POST") {
+			response = await axios.post(shell.ipOrHostname, config);
+		} else {
+			response = await axios.get(shell.ipOrHostname, config);
+		}
+
+		return response;
+	} catch (error) {
+		return null;
+	}
+	
+}
+
+/** 
+ * Gets the directory listing from the remote, and parses it
+ * 
+ * @param {WebShellSchema} shell The details of the selected shell
+ * @exports 
+ */
 const listDir = async (shell) => {
 	const response = await sendRequest(shell, LIST_DIR);
 	const dir = parseListDirResponse(response.data);
@@ -96,6 +119,12 @@ const listDir = async (shell) => {
 	return dir;
 }
 
+/** 
+ * Determines what operating system the target is running
+ * 
+ * @param {WebShellSchema} shell The details of the selected shell
+ * @exports 
+ */
 const determineOS = async (shell) => {
 	const command = encodeCommand("uname -a", shell.commandEncoding);
 
@@ -122,6 +151,12 @@ const determineOS = async (shell) => {
 	return os;
 };
 
+/** 
+ * Gets the current working directory of the remote
+ * 
+ * @param {WebShellSchema} shell The details of the selected shell
+ * @exports 
+ */
 const workingDir = async (shell) => {
 	const response = await sendRequest(shell, WORKING_DIR);
 	const dirName = parseWorkingDir(response.data);
@@ -129,4 +164,4 @@ const workingDir = async (shell) => {
 	return dirName;
 };
 
-module.exports = { sendRequest, determineOS, listDir, workingDir };
+module.exports = { sendRequest, sendArbitraryCommand, determineOS, listDir, workingDir };
