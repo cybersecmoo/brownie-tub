@@ -87,18 +87,23 @@ const sendRequest = async (shell, reqType) => {
 
 /** @exports */
 const sendArbitraryCommand = async (shell, command) => {
-	var request = encodeCommand(command, shell.commandEncoding);
+	try {
+		var request = encodeCommand(command, shell.commandEncoding);
 
-	const config = generateConfig(shell, request);
-	var response;
+		const config = generateConfig(shell, request);
+		var response;
 
-	if(shell.commandParamType === "POST") {
-		response = await axios.post(shell.ipOrHostname, config);
-	} else {
-		response = await axios.get(shell.ipOrHostname, config);
+		if(shell.commandParamType === "POST") {
+			response = await axios.post(shell.ipOrHostname, config);
+		} else {
+			response = await axios.get(shell.ipOrHostname, config);
+		}
+
+		return response;
+	} catch (error) {
+		return null;
 	}
-
-	return response;
+	
 }
 
 /** 
@@ -159,4 +164,4 @@ const workingDir = async (shell) => {
 	return dirName;
 };
 
-module.exports = { sendRequest, sendArbitraryRequest, determineOS, listDir, workingDir };
+module.exports = { sendRequest, sendArbitraryCommand, determineOS, listDir, workingDir };

@@ -79,9 +79,14 @@ async function createWindow() {
   });
 
   ipcMain.on("terminal:command", async (event, command) => {
-    var output = await sendArbitraryCommand(selectedShell, command);
-    output = parseMultiline(output);
-    event.reply("terminal:command-reply", output);
+    try {
+      var output = await sendArbitraryCommand(selectedShell, command);
+      output = parseMultiline(output);
+      event.reply("terminal:command-reply", output);
+    } catch(err) {
+      console.log(err);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});
+    }
   });
 
   // Listen for window being closed
