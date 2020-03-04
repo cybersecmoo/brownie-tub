@@ -35,13 +35,9 @@ const WebShellSchema = {
 		},
 		os: {
 			type: "string"
-		},
-		isAdmin: {
-			type: "boolean",
-			default: false
 		}
 	},
-	required: ["ipOrHostname", "commandParamType", "commandParam", "passwordEnabled", "isAdmin"]
+	required: ["ipOrHostname", "commandParamType", "commandParam", "passwordEnabled"]
 }
 
 module.exports = {

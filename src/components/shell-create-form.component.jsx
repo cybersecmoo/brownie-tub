@@ -26,8 +26,7 @@ class ShellCreateForm extends Component {
 			passwordParamType: "none",
 			passwordParam: "",
 			password: "",
-			os: "",
-			isAdmin: false
+			os: ""
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);

@@ -67,7 +67,6 @@ async function createWindow() {
   ipcMain.on("shell:select", async (event, shellDetails) => {
     try {
       selectedShell = shellDetails;
-      // TODO: Admin determination
       selectedShell.os = await determineOS(selectedShell);
       const dir = await listDir(selectedShell);
       const dirName = await workingDir(selectedShell);

@@ -37,8 +37,6 @@ class ShellDetailPanel extends Component {
 			const osElement = (
 				<Typography variant="p">
 					OS: {this.state.selectedShell.os}
-					<br />
-					Is Admin: {this.state.selectedShell.isAdmin.toString()}
 				</Typography>
 			);
 			
