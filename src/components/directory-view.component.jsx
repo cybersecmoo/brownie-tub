@@ -6,7 +6,6 @@ import FolderIcon from '@material-ui/icons/Folder';
 import FileIcon from '@material-ui/icons/InsertDriveFile';
 import "./dirview.css";
 import { Typography } from "@material-ui/core";
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 class DirectoryView extends Component {
 	constructor(props) {
