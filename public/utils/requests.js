@@ -80,8 +80,15 @@ const encodeCommand = (command, shellEncoding) => {
  * @param {String} reqType The name of the request type, as defined in `reqTypes.js`
  * @exports 
  */
-const sendRequest = async (shell, reqType) => {
+const sendRequest = async (shell, reqType, args = []) => {
 	var command = COMMAND_MAP[reqType][shell.os];
+	var expectedArgs = COMMAND_MAP[reqType]["args"];
+
+	if(args.length === expectedArgs && args.length > 0) {
+		const argsString = args.join(" ");
+		command = `${command} ${argsString}`;
+	}
+
 	return sendArbitraryCommand(shell, command);
 }
 
@@ -107,7 +114,7 @@ const sendArbitraryCommand = async (shell, command) => {
 }
 
 /** 
- * Gets the directory listing from the remote, and parses it
+ * Gets the pwd directory listing from the remote, and parses it
  * 
  * @param {WebShellSchema} shell The details of the selected shell
  * @exports 
@@ -117,6 +124,19 @@ const listDir = async (shell) => {
 	const dir = parseListDirResponse(response.data);
 
 	return dir;
+}
+
+/** 
+ * Gets a directory listing from the remote, and parses it
+ * 
+ * @param {WebShellSchema} shell The details of the selected shell
+ * @exports 
+ */
+const listDir = async (shell, dir) => {
+	const response = await sendRequest(shell, LIST_DIR, [dir]);
+	const dirListing = parseListDirResponse(response.data);
+
+	return dirListing;
 }
 
 /** 

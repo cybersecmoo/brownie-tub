@@ -6,6 +6,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import FileIcon from '@material-ui/icons/InsertDriveFile';
 import "./dirview.css";
 import { Typography } from "@material-ui/core";
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 class DirectoryView extends Component {
 	constructor(props) {
@@ -27,6 +28,19 @@ class DirectoryView extends Component {
 		window.ipcRenderer.on("shell:select-reply", (event, response) => {
 			this.setState({dirName: response.dirName, dir: response.dir});
 		});
+
+		this.handleDirClick = this.handleDirClick.bind(this);
+	}
+
+	handleDirClick = (file) => (event) => {
+		event.preventDefault();
+
+		if(file.type === "DIR") {
+			window.ipcRenderer.send("file:change-directory", {dir: file.name, pwd: this.state.dirName});
+		} else {
+
+		}
+		// TODO For files: show some form of modal panel? Or context menu of some sort
 	}
 
 	render() {
@@ -40,7 +54,7 @@ class DirectoryView extends Component {
 								return (
 									<ListItem button>
 										<FolderIcon />
-										<ListItemText primary={entry.name} />
+										<ListItemText primary={entry.name} onClick={this.handleDirClick(entry)} />
 									</ListItem>
 								);
 							} else {

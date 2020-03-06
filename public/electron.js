@@ -88,6 +88,17 @@ async function createWindow() {
     }
   });
 
+  ipcMain.on("file:change-directory", async (event, directory) => {
+    try {
+      const newDir = `${directory.pwd}/${directory.dir}`;
+      const listing = await listDir(selectedShell, command);
+      event.reply("file:change-dir-reply", listing);
+    } catch(err) {
+      console.log(err);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});
+    }
+  });
+
   // Listen for window being closed
   mainWindow.on("closed", () => {
     mainWindow = null;
