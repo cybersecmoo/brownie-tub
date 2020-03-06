@@ -2,7 +2,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { getDatabase } = require("./db/setup-db");
-const { sendArbitraryCommand, determineOS, listDir, workingDir } = require("./utils/requests");
+const { sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir } = require("./utils/requests");
 const { parseMultiline } = require("./utils/utils");
 
 
@@ -67,9 +67,8 @@ async function createWindow() {
   ipcMain.on("shell:select", async (event, shellDetails) => {
     try {
       selectedShell = shellDetails;
-      // TODO: Admin determination
       selectedShell.os = await determineOS(selectedShell);
-      const dir = await listDir(selectedShell);
+      const dir = await listWorkingDir(selectedShell);
       const dirName = await workingDir(selectedShell);
       event.reply("shell:select-reply", { shell: selectedShell, dir: dir, dirName: dirName });
     } catch (error) {
@@ -83,6 +82,17 @@ async function createWindow() {
       var output = await sendArbitraryCommand(selectedShell, command);
       output = parseMultiline(output);
       event.reply("terminal:command-reply", output);
+    } catch(err) {
+      console.log(err);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});
+    }
+  });
+
+  ipcMain.on("file:change-directory", async (event, directory) => {
+    try {
+      const newDir = `${directory.pwd}/${directory.dir}`;
+      const listing = await listDir(selectedShell, command);
+      event.reply("file:change-dir-reply", listing);
     } catch(err) {
       console.log(err);
       event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});

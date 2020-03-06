@@ -5,17 +5,20 @@ const COMMAND_MAP = {
 	LIST_DIR: {
 		WINDOWS: "dir",
 		LINUX: "ls -la",
-		MAC: "ls -la"
+		MAC: "ls -la",
+		args: 1
 	},
 	GET_USER: {
 		WINDOWS: "whoami",
 		LINUX: "whoami",
-		MAC: "whoami"
+		MAC: "whoami",
+		args: 0
 	},
 	WORKING_DIR: {
 		WINDOWS: "cd",
 		LINUX: "pwd",
-		MAC: "pwd"
+		MAC: "pwd",
+		args: 0
 	}
 };
 
