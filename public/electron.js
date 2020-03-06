@@ -2,7 +2,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { getDatabase } = require("./db/setup-db");
-const { sendArbitraryCommand, determineOS, listDir, workingDir } = require("./utils/requests");
+const { sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir } = require("./utils/requests");
 const { parseMultiline } = require("./utils/utils");
 
 
@@ -68,7 +68,7 @@ async function createWindow() {
     try {
       selectedShell = shellDetails;
       selectedShell.os = await determineOS(selectedShell);
-      const dir = await listDir(selectedShell);
+      const dir = await listWorkingDir(selectedShell);
       const dirName = await workingDir(selectedShell);
       event.reply("shell:select-reply", { shell: selectedShell, dir: dir, dirName: dirName });
     } catch (error) {

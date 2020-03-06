@@ -54,19 +54,19 @@ class DirectoryView extends Component {
 
   render() {
     return (
-      <div>
+      <ContextMenu
+				className="dir-view"
+				aria-label="directory"
+				contextId={"dir-area"}
+				closeOnClick={true}
+				closeOnClickOut={true}
+				items={[
+					{ label: "Create File", onClick: this.handleCreateFile },
+					{ label: "Create Directory", onClick: this.handleCreateDir }
+				]}
+			>
         <Typography variant="h5">{this.state.dirName}</Typography>
-        <List
-          className="dir-view"
-          aria-label="directory"
-					contextId={"dir-area"}
-					closeOnClick={true}
-					closeOnClickOut={true}
-          items={[
-            { label: "Create File", onClick: this.handleCreateFile },
-            { label: "Create Directory", onClick: this.handleCreateDir }
-          ]}
-        >
+        <List>
           {this.state.dir.map((entry, index) => {
             if (entry.type === "DIR") {
               return (
@@ -85,7 +85,7 @@ class DirectoryView extends Component {
             }
           })}
         </List>
-      </div>
+      </ContextMenu>
     );
   }
 }

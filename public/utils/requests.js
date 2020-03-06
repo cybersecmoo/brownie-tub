@@ -119,7 +119,7 @@ const sendArbitraryCommand = async (shell, command) => {
  * @param {WebShellSchema} shell The details of the selected shell
  * @exports 
  */
-const listDir = async (shell) => {
+const listWorkingDir = async (shell) => {
 	const response = await sendRequest(shell, LIST_DIR);
 	const dir = parseListDirResponse(response.data);
 
@@ -184,4 +184,4 @@ const workingDir = async (shell) => {
 	return dirName;
 };
 
-module.exports = { sendRequest, sendArbitraryCommand, determineOS, listDir, workingDir };
+module.exports = { sendRequest, sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir };
