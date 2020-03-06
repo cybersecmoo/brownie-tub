@@ -6,7 +6,6 @@ import FolderIcon from "@material-ui/icons/Folder";
 import FileIcon from "@material-ui/icons/InsertDriveFile";
 import "./dirview.css";
 import { Typography } from "@material-ui/core";
-import ContextMenu from "react-context-menu";
 
 class DirectoryView extends Component {
   constructor(props) {
@@ -30,8 +29,6 @@ class DirectoryView extends Component {
     });
 
     this.handleDirClick = this.handleDirClick.bind(this);
-    this.handleCreateFile = this.handleCreateFile.bind(this);
-    this.handleCreateDir = this.handleCreateDir.bind(this);
   }
 
   handleDirClick = file => event => {
@@ -46,25 +43,9 @@ class DirectoryView extends Component {
     }
   };
 
-	// TODO Implement this
-  handleCreateFile = () => {};
-
-	// TODO Implement this
-  handleCreateDir = () => {};
-
   render() {
     return (
-      <ContextMenu
-				className="dir-view"
-				aria-label="directory"
-				contextId={"dir-area"}
-				closeOnClick={true}
-				closeOnClickOut={true}
-				items={[
-					{ label: "Create File", onClick: this.handleCreateFile },
-					{ label: "Create Directory", onClick: this.handleCreateDir }
-				]}
-			>
+      <div>
         <Typography variant="h5">{this.state.dirName}</Typography>
         <List>
           {this.state.dir.map((entry, index) => {
@@ -85,7 +66,7 @@ class DirectoryView extends Component {
             }
           })}
         </List>
-      </ContextMenu>
+      </div>
     );
   }
 }

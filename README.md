@@ -16,6 +16,9 @@ BROWNIE TUB can support essentially any web shell that is based on commands bein
 - Easy-to-Use: simple GUI allows easy control and configuration of your shells
 - Persistent: Stores data in an RxDB store (backed by PouchDB)
 - Control multiple shells from one app: track as many shells as you'd like, and switch between them seamlessly
+- Note that BROWNIE TUB comes with a small set of commands (i.e. read file, change directory) out-of-the-box. Feel free to fork and add more, though.
+  - This is because the concept of BROWNIE TUB is to support web shells designed as initial footholds.
+  - If your entire campaign is web-shell-based, then you will want to add extra commands, for sure.
 
 ### Building this Yourself ###
 
