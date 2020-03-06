@@ -59,7 +59,9 @@ class DirectoryView extends Component {
         <List
           className="dir-view"
           aria-label="directory"
-          contextId={"dir-area"}
+					contextId={"dir-area"}
+					closeOnClick={true}
+					closeOnClickOut={true}
           items={[
             { label: "Create File", onClick: this.handleCreateFile },
             { label: "Create Directory", onClick: this.handleCreateDir }
