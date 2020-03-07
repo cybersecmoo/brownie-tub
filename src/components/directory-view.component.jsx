@@ -36,6 +36,7 @@ class DirectoryView extends Component {
 
     if (file.type === "DIR") {
       // TODO Test this
+      // TODO Handle the response
       window.ipcRenderer.send("file:change-directory", { dir: file.name, pwd: this.state.dirName });
     } else {
 			// TODO Implement the electron side of this
