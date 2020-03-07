@@ -40,8 +40,6 @@ class Terminal extends Component {
 		} else {
 			this.setState({terminalLines: [], currentCommand: ""});
 		}
-		
-		console.log(this.state);
 	}
 
 	handleChange = name => event => {
