@@ -19,6 +19,12 @@ const COMMAND_MAP = {
 		LINUX: "pwd",
 		MAC: "pwd",
 		args: 0
+	},
+	READ_FILE: {
+		WINDOWS: "type",
+		LINUX: "cat",
+		MAC: "cat",
+		args: 1
 	}
 };
 

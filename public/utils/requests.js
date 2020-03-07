@@ -1,8 +1,8 @@
 const axios = require("axios");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
-const { LIST_DIR, WORKING_DIR } = require("./reqTypes");
+const { LIST_DIR, WORKING_DIR, READ_FILE } = require("./reqTypes");
 const { WINDOWS, MAC, LINUX } = require("./osTypes");
-const { parseListDirResponse, parseWorkingDir } = require("./utils");
+const { parseMultiline, parseListDirResponse, parseWorkingDir } = require("./utils");
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -184,4 +184,19 @@ const workingDir = async (shell) => {
 	return dirName;
 };
 
-module.exports = { sendRequest, sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir };
+/**
+ * Gets the (text encoded) contents of the given file
+ * 
+ * @param 	{WebShellSchema} 	shell The details of the selected shell
+ * @param 	{String}					file	The path to the file we want to read
+ * @returns	{Array[String]}					The lines of the file
+ * @exports
+ */
+const readFile = async (shell, file) => {
+	const response = await sendRequest(shell, READ_FILE, [file]);
+	const lines = parseMultiline(response.data);
+
+	return lines;
+}
+
+module.exports = { sendRequest, sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir, readFile };

@@ -6,6 +6,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import FileIcon from "@material-ui/icons/InsertDriveFile";
 import "./dirview.css";
 import { Typography } from "@material-ui/core";
+import { FileView } from "./file-view.component";
 
 class DirectoryView extends Component {
   constructor(props) {
@@ -43,8 +44,7 @@ class DirectoryView extends Component {
       window.ipcRenderer.send("file:change-directory", { dir: file.name, pwd: this.state.dirName });
     } else {
 			// TODO Implement the electron side of this
-			// TODO Implement the handler for the response (show a modal panel with the fie contents)
-      window.ipcRenderer.send("file:view-file", { file: file.name, pwd: this.state.dirName });
+      window.ipcRenderer.send("file:view", { file: file.name, pwd: this.state.dirName });
     }
   };
 
@@ -71,6 +71,7 @@ class DirectoryView extends Component {
             }
           })}
         </List>
+        <FileView />
       </div>
     );
   }
