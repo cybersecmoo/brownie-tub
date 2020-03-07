@@ -14,10 +14,8 @@ const getDatabase = (name, adapter) => {
 
 const createDatabase = async (name, adapter) => {
 	try {
-		const dbSuffix = new Date().getTime(); // we add a random timestamp in dev-mode to reset the database on each start
-		const dbName = `${name + dbSuffix}`;
 		const db = await RxDB.create({
-			name: dbName,
+			name: name,
 			adapter: adapter
 		});
 

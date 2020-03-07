@@ -1,6 +1,6 @@
 {
   "name": "brownie-tub",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "main": "public/electron.js",
   "private": true,
   "author": "cybersecmoo <50770700+cybersecmoo@users.noreply.github.com>",
