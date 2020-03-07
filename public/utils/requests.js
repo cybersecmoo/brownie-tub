@@ -114,32 +114,6 @@ const sendArbitraryCommand = async (shell, command) => {
 }
 
 /** 
- * Gets the pwd directory listing from the remote, and parses it
- * 
- * @param {WebShellSchema} shell The details of the selected shell
- * @exports 
- */
-const listWorkingDir = async (shell) => {
-	const response = await sendRequest(shell, LIST_DIR);
-	const dir = parseListDirResponse(response.data);
-
-	return dir;
-}
-
-/** 
- * Gets a directory listing from the remote, and parses it
- * 
- * @param {WebShellSchema} shell The details of the selected shell
- * @exports 
- */
-const listDir = async (shell, dir) => {
-	const response = await sendRequest(shell, LIST_DIR, [dir]);
-	const dirListing = parseListDirResponse(response.data);
-
-	return dirListing;
-}
-
-/** 
  * Determines what operating system the target is running
  * 
  * @param {WebShellSchema} shell The details of the selected shell
@@ -171,32 +145,4 @@ const determineOS = async (shell) => {
 	return os;
 };
 
-/** 
- * Gets the current working directory of the remote
- * 
- * @param {WebShellSchema} shell The details of the selected shell
- * @exports 
- */
-const workingDir = async (shell) => {
-	const response = await sendRequest(shell, WORKING_DIR);
-	const dirName = parseWorkingDir(response.data);
-
-	return dirName;
-};
-
-/**
- * Gets the (text encoded) contents of the given file
- * 
- * @param 	{WebShellSchema} 	shell The details of the selected shell
- * @param 	{String}					file	The path to the file we want to read
- * @returns	{Array[String]}					The lines of the file
- * @exports
- */
-const readFile = async (shell, file) => {
-	const response = await sendRequest(shell, READ_FILE, [file]);
-	const lines = parseMultiline(response.data);
-
-	return lines;
-}
-
-module.exports = { sendRequest, sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir, readFile };
+module.exports = { sendRequest, sendArbitraryCommand, determineOS };

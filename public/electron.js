@@ -2,8 +2,8 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { getDatabase } = require("./db/setup-db");
-const { sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir, readFile } = require("./utils/requests");
-const { parseMultiline, newDirRelativeToAbsolute } = require("./utils/utils");
+const { sendArbitraryCommand, determineOS } = require("./utils/requests");
+const { parseMultiline, parseListDirResponse, parseWorkingDir, newDirRelativeToAbsolute } = require("./utils/utils");
 
 
 
@@ -79,8 +79,12 @@ async function createWindow() {
     try {
       selectedShell = shellDetails;
       selectedShell.os = await determineOS(selectedShell);
-      const dir = await listWorkingDir(selectedShell);
-      const dirName = await workingDir(selectedShell);
+      
+      const response = await sendRequest(shell, LIST_DIR);
+      const dir = parseListDirResponse(response.data);
+
+      const response = await sendRequest(shell, WORKING_DIR);
+      const dirName = parseWorkingDir(response.data);
       event.reply("shell:select-reply", { shell: selectedShell, dir: dir, dirName: dirName });
     } catch (error) {
       console.error(error);
@@ -102,24 +106,28 @@ async function createWindow() {
   ipcMain.on("file:change-directory", async (event, directory) => {
     try {
       const newDirectory = newDirRelativeToAbsolute(selectedShell.os, directory.pwd, directory.dir);
-      const listing = await listDir(selectedShell, newDirectory);
-      console.log(listing);
-      event.reply("file:change-dir-reply", {dirName: newDirectory, listing: listing});
+      const response = await sendRequest(selectedShell, LIST_DIR, [newDirectory]);
+      const dirListing = parseListDirResponse(response.data);
+      console.log(dirListing);
+
+      event.reply("file:change-dir-reply", {dirName: newDirectory, listing: dirListing});
     } catch(err) {
       console.log(err);
-      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to change directory!"});
     }
   });
 
   ipcMain.on("file:view", async (event, file) => {
     try {
       const filePath = newDirRelativeToAbsolute(selectedShell.os, file.pwd, file.file);
-      const textLines = await readFile(selectedShell, filePath);
+	    const response = await sendRequest(selectedShell, READ_FILE, [filePath]);
+	    const textLines = parseMultiline(response.data);
       console.log(textLines);
+
       event.reply("file:view-reply", {fileName: newDirectory, textLines: textLines});
     } catch(err) {
       console.log(err);
-      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to view file!"});
     }
   });
 
