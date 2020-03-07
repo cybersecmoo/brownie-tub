@@ -28,6 +28,10 @@ class DirectoryView extends Component {
       this.setState({ dirName: response.dirName, dir: response.dir });
     });
 
+    window.ipcRenderer.on("file:change-dir-reply", (event, response) => {
+      this.setState({ dirName: response.dirName, dir: response.listing });
+    });
+
     this.handleDirClick = this.handleDirClick.bind(this);
   }
 
@@ -36,7 +40,6 @@ class DirectoryView extends Component {
 
     if (file.type === "DIR") {
       // TODO Test this
-      // TODO Handle the response
       window.ipcRenderer.send("file:change-directory", { dir: file.name, pwd: this.state.dirName });
     } else {
 			// TODO Implement the electron side of this

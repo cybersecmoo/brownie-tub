@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { getDatabase } = require("./db/setup-db");
 const { sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir } = require("./utils/requests");
-const { parseMultiline } = require("./utils/utils");
+const { parseMultiline, newDirRelativeToAbsolute } = require("./utils/utils");
 
 
 
@@ -101,12 +101,10 @@ async function createWindow() {
 
   ipcMain.on("file:change-directory", async (event, directory) => {
     try {
-      // TODO handle windows paths properly
-      const newDir = `${directory.pwd}/${directory.dir}`;
-      // TODO parse the requested new directory to work out its name
-      const listing = await listDir(selectedShell, newDir);
+      const newDirectory = newDirRelativeToAbsolute(selectedShell.os, directory.pwd, directory.dir);
+      const listing = await listDir(selectedShell, newDirectory);
       console.log(listing);
-      event.reply("file:change-dir-reply", listing);
+      event.reply("file:change-dir-reply", {dirName: newDirectory, listing: listing});
     } catch(err) {
       console.log(err);
       event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});
