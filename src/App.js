@@ -11,6 +11,8 @@ import DirectoryView from "./components/directory-view.component";
 import { Component } from 'react';
 import Terminal from "./components/terminal.component";
 
+// TODO Remove all debug-type logging
+
 const dark = createMuiTheme({
   palette: {
     type: "dark",

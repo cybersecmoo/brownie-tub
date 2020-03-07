@@ -102,7 +102,8 @@ async function createWindow() {
   ipcMain.on("file:change-directory", async (event, directory) => {
     try {
       const newDir = `${directory.pwd}/${directory.dir}`;
-      const listing = await listDir(selectedShell, command);
+      const listing = await listDir(selectedShell, newDir);
+      console.log(listing);
       event.reply("file:change-dir-reply", listing);
     } catch(err) {
       console.log(err);
