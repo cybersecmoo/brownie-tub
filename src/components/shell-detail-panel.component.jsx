@@ -16,6 +16,9 @@ class ShellDetailPanel extends Component {
 
   render() {
     if (this.state.selectedShell !== null) {
+			const titleElement = (
+				<Typography variant="p">Endpoint: {this.state.selectedShell.ipOrHostname}</Typography>
+			);
 			const commandElement = (
 					<Typography variant="p">
 						Command {this.state.selectedShell.commandParamType} param: {this.state.selectedShell.commandParam} (encoded with {this.state.selectedShell.commandEncoding})
@@ -42,7 +45,7 @@ class ShellDetailPanel extends Component {
 			
 			return (
 				<div>
-					<Typography variant="h3">{this.state.selectedShell.ipOrHostname}</Typography>
+					{ titleElement }
 					<br />
 					{ commandElement }
 					<br />

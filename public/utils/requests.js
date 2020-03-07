@@ -1,8 +1,6 @@
 const axios = require("axios");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
-const { LIST_DIR, WORKING_DIR } = require("./reqTypes");
 const { WINDOWS, MAC, LINUX } = require("./osTypes");
-const { parseListDirResponse, parseWorkingDir } = require("./utils");
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -114,32 +112,6 @@ const sendArbitraryCommand = async (shell, command) => {
 }
 
 /** 
- * Gets the pwd directory listing from the remote, and parses it
- * 
- * @param {WebShellSchema} shell The details of the selected shell
- * @exports 
- */
-const listWorkingDir = async (shell) => {
-	const response = await sendRequest(shell, LIST_DIR);
-	const dir = parseListDirResponse(response.data);
-
-	return dir;
-}
-
-/** 
- * Gets a directory listing from the remote, and parses it
- * 
- * @param {WebShellSchema} shell The details of the selected shell
- * @exports 
- */
-const listDir = async (shell, dir) => {
-	const response = await sendRequest(shell, LIST_DIR, [dir]);
-	const dirListing = parseListDirResponse(response.data);
-
-	return dirListing;
-}
-
-/** 
  * Determines what operating system the target is running
  * 
  * @param {WebShellSchema} shell The details of the selected shell
@@ -171,17 +143,4 @@ const determineOS = async (shell) => {
 	return os;
 };
 
-/** 
- * Gets the current working directory of the remote
- * 
- * @param {WebShellSchema} shell The details of the selected shell
- * @exports 
- */
-const workingDir = async (shell) => {
-	const response = await sendRequest(shell, WORKING_DIR);
-	const dirName = parseWorkingDir(response.data);
-
-	return dirName;
-};
-
-module.exports = { sendRequest, sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir };
+module.exports = { sendRequest, sendArbitraryCommand, determineOS };

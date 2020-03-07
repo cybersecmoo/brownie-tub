@@ -6,6 +6,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import FileIcon from "@material-ui/icons/InsertDriveFile";
 import "./dirview.css";
 import { Typography } from "@material-ui/core";
+import FileView from "./file-view.component";
 
 class DirectoryView extends Component {
   constructor(props) {
@@ -28,6 +29,10 @@ class DirectoryView extends Component {
       this.setState({ dirName: response.dirName, dir: response.dir });
     });
 
+    window.ipcRenderer.on("file:change-dir-reply", (event, response) => {
+      this.setState({ dirName: response.dirName, dir: response.listing });
+    });
+
     this.handleDirClick = this.handleDirClick.bind(this);
   }
 
@@ -37,28 +42,26 @@ class DirectoryView extends Component {
     if (file.type === "DIR") {
       window.ipcRenderer.send("file:change-directory", { dir: file.name, pwd: this.state.dirName });
     } else {
-			// TODO Implement the electron side of this
-			// TODO Implement the handler for the response (show a modal panel with the fie contents)
-      window.ipcRenderer.send("file:view-file", { file: file.name, pwd: this.state.dirName });
+      window.ipcRenderer.send("file:view", { file: file.name, pwd: this.state.dirName });
     }
   };
 
   render() {
     return (
-      <div>
+      <div className="dir-view">
         <Typography variant="h5">{this.state.dirName}</Typography>
         <List>
           {this.state.dir.map((entry, index) => {
             if (entry.type === "DIR") {
               return (
-                <ListItem button>
+                <ListItem button onClick={this.handleDirClick(entry)}>
                   <FolderIcon />
-                  <ListItemText primary={entry.name} onClick={this.handleDirClick(entry)} />
+                  <ListItemText primary={entry.name} />
                 </ListItem>
               );
             } else {
               return (
-                <ListItem button>
+                <ListItem button onClick={this.handleDirClick(entry)}>
                   <FileIcon />
                   <ListItemText primary={entry.name} />
                 </ListItem>
@@ -66,6 +69,7 @@ class DirectoryView extends Component {
             }
           })}
         </List>
+        <FileView />
       </div>
     );
   }

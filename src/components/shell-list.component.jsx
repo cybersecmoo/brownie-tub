@@ -35,6 +35,12 @@ class ShellList extends Component {
 			});
 		});
 
+		window.ipcRenderer.on("shell:list-reply", (event, shells) => {
+			this.setState({
+				shells: shells
+			});
+		});
+
 		window.ipcRenderer.on("shell:delete-reply", (event) => {
 			var shellsList = this.state.shells;
 			shellsList.splice(this.state.selectedIndex, 1);
@@ -42,6 +48,10 @@ class ShellList extends Component {
 				shells: shellsList
 			});
 		});
+	}
+
+	componentDidMount = async () =>{
+		window.ipcRenderer.send("shell:list");
 	}
 
 	handleFormOpen() {

@@ -2,10 +2,9 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { getDatabase } = require("./db/setup-db");
-const { sendArbitraryCommand, determineOS, listWorkingDir, listDir, workingDir } = require("./utils/requests");
-const { parseMultiline } = require("./utils/utils");
-
-
+const { sendRequest, sendArbitraryCommand, determineOS } = require("./utils/requests");
+const { parseMultiline, parseListDirResponse, parseWorkingDir, newDirRelativeToAbsolute } = require("./utils/utils");
+const { LIST_DIR, WORKING_DIR, READ_FILE } = require("./utils/reqTypes");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -41,6 +40,17 @@ async function createWindow() {
     }
   });
 
+  ipcMain.on("shell:list", async (event) => {
+    try {
+      const collection = await shellCollection.dump();
+      const shells = collection.docs;
+      event.reply("shell:list-reply", shells);
+    } catch (error) {
+      console.error(error);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to list shells!"});
+    }
+  });
+
   ipcMain.on("shell:delete", async (event, shellDetails) => {
     try {
       const shell = await shellCollection.findOne().where("ipOrHostname").eq(shellDetails.ipOrHostname);
@@ -68,8 +78,12 @@ async function createWindow() {
     try {
       selectedShell = shellDetails;
       selectedShell.os = await determineOS(selectedShell);
-      const dir = await listWorkingDir(selectedShell);
-      const dirName = await workingDir(selectedShell);
+      
+      var response = await sendRequest(selectedShell, LIST_DIR);
+      const dir = parseListDirResponse(response.data);
+
+      response = await sendRequest(selectedShell, WORKING_DIR);
+      const dirName = parseWorkingDir(response.data);
       event.reply("shell:select-reply", { shell: selectedShell, dir: dir, dirName: dirName });
     } catch (error) {
       console.error(error);
@@ -79,8 +93,8 @@ async function createWindow() {
 
   ipcMain.on("terminal:command", async (event, command) => {
     try {
-      var output = await sendArbitraryCommand(selectedShell, command);
-      output = parseMultiline(output);
+      var response = await sendArbitraryCommand(selectedShell, command);
+      const output = parseMultiline(response.data);
       event.reply("terminal:command-reply", output);
     } catch(err) {
       console.log(err);
@@ -90,12 +104,27 @@ async function createWindow() {
 
   ipcMain.on("file:change-directory", async (event, directory) => {
     try {
-      const newDir = `${directory.pwd}/${directory.dir}`;
-      const listing = await listDir(selectedShell, command);
-      event.reply("file:change-dir-reply", listing);
+      const newDirectory = newDirRelativeToAbsolute(selectedShell.os, directory.pwd, directory.dir);
+      const response = await sendRequest(selectedShell, LIST_DIR, [newDirectory]);
+      const dirListing = parseListDirResponse(response.data);
+
+      event.reply("file:change-dir-reply", {dirName: newDirectory, listing: dirListing});
     } catch(err) {
       console.log(err);
-      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to send command!"});
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to change directory!"});
+    }
+  });
+
+  ipcMain.on("file:view", async (event, file) => {
+    try {
+      const filePath = newDirRelativeToAbsolute(selectedShell.os, file.pwd, file.file);
+	    const response = await sendRequest(selectedShell, READ_FILE, [filePath]);
+	    const textLines = parseMultiline(response.data);
+
+      event.reply("file:view-reply", {fileName: filePath, textLines: textLines});
+    } catch(err) {
+      console.log(err);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to view file!"});
     }
   });
 

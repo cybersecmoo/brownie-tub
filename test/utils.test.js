@@ -105,3 +105,59 @@ describe("Test working-directory name parsing", () => {
 		assert.equal(dirName, expected);
 	});
 });
+
+describe("Test conversion from relative to absolute paths", () => {
+	it("Should return the correct path on Unix - parent dir", () => {
+		const os = "LINUX";
+		const currentDir = "/home/user/stuff/otherStuff";
+		const newDirRelative = "..";
+		const newDirAbs = utils.newDirRelativeToAbsolute(os, currentDir, newDirRelative);
+		const expected = "/home/user/stuff";
+		assert.equal(newDirAbs, expected);
+	});
+
+	it("Should return the correct path on Unix - current dir", () => {
+		const os = "LINUX";
+		const currentDir = "/home/user/stuff/otherStuff";
+		const newDirRelative = ".";
+		const newDirAbs = utils.newDirRelativeToAbsolute(os, currentDir, newDirRelative);
+		const expected = "/home/user/stuff/otherStuff";
+		assert.equal(newDirAbs, expected);
+	});
+	
+	it("Should return the correct path on Unix - child dir", () => {
+		const os = "LINUX";
+		const currentDir = "/home/user/stuff/otherStuff";
+		const newDirRelative = "childDir";
+		const newDirAbs = utils.newDirRelativeToAbsolute(os, currentDir, newDirRelative);
+		const expected = "/home/user/stuff/otherStuff/childDir";
+		assert.equal(newDirAbs, expected);
+	});
+
+	it("Should return the correct path on Windows - parent dir", () => {
+		const os = "WINDOWS";
+		const currentDir = "C:\\Users\\user\\Documents\\subdir";
+		const newDirRelative = "..";
+		const newDirAbs = utils.newDirRelativeToAbsolute(os, currentDir, newDirRelative);
+		const expected = "C:\\Users\\user\\Documents";
+		assert.equal(newDirAbs, expected);
+	});
+
+	it("Should return the correct path on Windows - current dir", () => {
+		const os = "WINDOWS";
+		const currentDir = "C:\\Users\\user\\Documents\\subdir";
+		const newDirRelative = ".";
+		const newDirAbs = utils.newDirRelativeToAbsolute(os, currentDir, newDirRelative);
+		const expected = "C:\\Users\\user\\Documents\\subdir";
+		assert.equal(newDirAbs, expected);
+	});
+	
+	it("Should return the correct path on Windows - child dir", () => {
+		const os = "WINDOWS";
+		const currentDir = "C:\\Users\\user\\Documents\\subdir";
+		const newDirRelative = "childDir";
+		const newDirAbs = utils.newDirRelativeToAbsolute(os, currentDir, newDirRelative);
+		const expected = "C:\\Users\\user\\Documents\\subdir\\childDir";
+		assert.equal(newDirAbs, expected);
+	});
+});

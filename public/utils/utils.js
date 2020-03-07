@@ -7,7 +7,8 @@ const { WINDOWS, LINUX, MAC } = require("./osTypes");
  * @exports 
  */
 const parseMultiline = (multilineInput) => {
-	const lines = multilineInput.split(/\r?\n/);
+	lines = multilineInput.split(/\r?\n/);
+
 	return lines;
 }
 
@@ -114,4 +115,34 @@ const parseWorkingDir = (workingDirResponse) => {
 	return lines[0];
 }
 
-module.exports = { parseMultiline, parseListDirResponse, parseWorkingDir };
+/**
+ * Parses a requested new directory, and the current directory to which the new one is relative, to find the path of the new directory
+ * 
+ * @param {String} os					The operating system, as defined in `osTypes.js`
+ * @param {String} currentDir The directory at which we are currently looking
+ * @param {String} newDirRel  The new directory's path, relative to `currentDir`
+ * @returns {String} The new directory's absolute path
+ * @exports
+ */
+const newDirRelativeToAbsolute = (os, currentDir, newDirRel) => {
+	var absDir = "";
+	var fileSep = "/";
+
+	if(os === WINDOWS) {
+		fileSep = "\\";
+	}
+
+	var dirStructure = currentDir.split(fileSep);
+
+	if(newDirRel === "..") {
+		dirStructure = dirStructure.slice(0, -1);
+	} else if(newDirRel !== ".") {
+		dirStructure.push(newDirRel);
+	}
+
+	absDir = dirStructure.join(fileSep);
+
+	return absDir;
+}
+
+module.exports = { parseMultiline, parseListDirResponse, parseWorkingDir, newDirRelativeToAbsolute };

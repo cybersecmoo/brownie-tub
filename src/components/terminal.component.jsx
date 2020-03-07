@@ -9,10 +9,7 @@ class Terminal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			terminalLines: [
-				"hi",
-				"bye"
-			],
+			terminalLines: [],
 			currentCommand: ""
 		};
 
@@ -37,13 +34,12 @@ class Terminal extends Component {
 		event.preventDefault();
 
 		if(this.state.currentCommand !== "clear") {
-			window.ipcRenderer.send("terminal:command", this.state.currentCommand);
+			const command = this.state.currentCommand;
 			this.setState({...this.state, currentCommand: ""});
+			window.ipcRenderer.send("terminal:command", command);
 		} else {
 			this.setState({terminalLines: [], currentCommand: ""});
 		}
-		
-		console.log(this.state);
 	}
 
 	handleChange = name => event => {
