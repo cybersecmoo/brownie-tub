@@ -19,6 +19,7 @@ BROWNIE TUB can support essentially any web shell that is based on commands bein
 - Note that BROWNIE TUB comes with a small set of commands (i.e. read file, change directory) out-of-the-box. Feel free to fork and add more, though.
   - This is because the concept of BROWNIE TUB is to support web shells designed as initial footholds.
   - If your entire campaign is web-shell-based, then you will want to add extra commands, for sure.
+  - You could also add an `Issue`, with a label of `Enhancement`, and I'll see if I have time to implement it (around my day job etc. of course)
 
 ### Building this Yourself ###
 
@@ -27,3 +28,7 @@ BROWNIE TUB can support essentially any web shell that is based on commands bein
 3. Run `npm run rebuild` to rebuild the sqlite3 module, so it works with electron
 4. Run `npm run build` to build the react part
 5. Run `npm run electron-pack` to package the app.
+
+### Pre-Built Binaries ###
+
+Under `Releases`, there are binaries (`.exe`, `.deb`, `.AppImage`) for Windows and Linux platforms.
