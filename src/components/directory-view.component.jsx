@@ -6,7 +6,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import FileIcon from "@material-ui/icons/InsertDriveFile";
 import "./dirview.css";
 import { Typography } from "@material-ui/core";
-import { FileView } from "./file-view.component";
+import FileView from "./file-view.component";
 
 class DirectoryView extends Component {
   constructor(props) {
