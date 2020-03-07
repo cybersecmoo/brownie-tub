@@ -7,7 +7,8 @@ const { WINDOWS, LINUX, MAC } = require("./osTypes");
  * @exports 
  */
 const parseMultiline = (multilineInput) => {
-	const lines = multilineInput.split(/\r?\n/);
+	lines = multilineInput.split(/\r?\n/);
+
 	return lines;
 }
 

@@ -43,14 +43,14 @@ class App extends Component {
       <ThemeProvider theme={dark}>
         <CssBaseline />
         <div className="main">
-          <Grid container className="row1">
-            <Grid item xs={2}>
+          <Grid container className="row1 flex-section">
+            <Grid item xs={3} className="flex-col-scroll shell-list">
               <ShellList />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={6} className="flex-col-scroll directory">
               <DirectoryView />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3} className="flex-col-scroll details">
               <ShellDetailPanel />
             </Grid>
           </Grid>

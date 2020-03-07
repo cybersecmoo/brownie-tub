@@ -1,8 +1,6 @@
 const axios = require("axios");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
-const { LIST_DIR, WORKING_DIR, READ_FILE } = require("./reqTypes");
 const { WINDOWS, MAC, LINUX } = require("./osTypes");
-const { parseMultiline, parseListDirResponse, parseWorkingDir } = require("./utils");
 
 const generateConfig = (shell, command) => {
 	var config = {

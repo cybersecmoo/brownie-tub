@@ -12,7 +12,7 @@ class FileView extends Component {
 			textLines: []
 		};
 
-		window.ipcRenderer.on("file:view-response", (event, response) => {
+		window.ipcRenderer.on("file:view-reply", (event, response) => {
 			this.setState({
 				open: true,
 				fileName: response.fileName,

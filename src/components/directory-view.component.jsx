@@ -40,30 +40,28 @@ class DirectoryView extends Component {
     event.preventDefault();
 
     if (file.type === "DIR") {
-      // TODO Test this
       window.ipcRenderer.send("file:change-directory", { dir: file.name, pwd: this.state.dirName });
     } else {
-			// TODO Implement the electron side of this
       window.ipcRenderer.send("file:view", { file: file.name, pwd: this.state.dirName });
     }
   };
 
   render() {
     return (
-      <div>
+      <div className="dir-view">
         <Typography variant="h5">{this.state.dirName}</Typography>
         <List>
           {this.state.dir.map((entry, index) => {
             if (entry.type === "DIR") {
               return (
-                <ListItem button>
+                <ListItem button onClick={this.handleDirClick(entry)}>
                   <FolderIcon />
-                  <ListItemText primary={entry.name} onClick={this.handleDirClick(entry)} />
+                  <ListItemText primary={entry.name} />
                 </ListItem>
               );
             } else {
               return (
-                <ListItem button>
+                <ListItem button onClick={this.handleDirClick(entry)}>
                   <FileIcon />
                   <ListItemText primary={entry.name} />
                 </ListItem>

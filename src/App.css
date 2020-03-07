@@ -48,3 +48,25 @@ div.main {
 .row2 {
   height: 33vh;
 }
+
+.flex-section {
+  flex-direction: column;
+}
+
+.flex-col-scroll {
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 100%;
+}
+
+.shell-list {
+  min-width: 25%;
+}
+
+.directory {
+  min-width: 50%;
+}
+
+.details {
+  min-width: 25%;
+}

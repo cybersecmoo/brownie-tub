@@ -1,6 +1,7 @@
 const LIST_DIR = "LIST_DIR";
 const GET_USER = "GET_USER";
 const WORKING_DIR = "WORKING_DIR";
+const READ_FILE = "READ_FILE";
 const COMMAND_MAP = {
 	LIST_DIR: {
 		WINDOWS: "dir",
@@ -28,4 +29,4 @@ const COMMAND_MAP = {
 	}
 };
 
-module.exports = { LIST_DIR, GET_USER, WORKING_DIR, COMMAND_MAP };
+module.exports = { LIST_DIR, GET_USER, WORKING_DIR, READ_FILE, COMMAND_MAP };
