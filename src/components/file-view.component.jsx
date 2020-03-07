@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { DialogContent } from '@material-ui/core';
-import PropTypes from 'prop-types';
 
 class FileView extends Component {
 	constructor(props) {
