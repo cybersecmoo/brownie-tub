@@ -41,6 +41,17 @@ async function createWindow() {
     }
   });
 
+  ipcMain.on("shell:list", async (event) => {
+    try {
+      const collection = await shellCollection.dump();
+      const shells = collection.docs;
+      event.reply("shell:list-reply", shells);
+    } catch (error) {
+      console.error(error);
+      event.reply("misc:alert", {alertType: "warning", alertMessage: "Failed to list shells!"});
+    }
+  });
+
   ipcMain.on("shell:delete", async (event, shellDetails) => {
     try {
       const shell = await shellCollection.findOne().where("ipOrHostname").eq(shellDetails.ipOrHostname);
