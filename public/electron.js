@@ -80,10 +80,10 @@ async function createWindow() {
       selectedShell.os = await determineOS(selectedShell);
       
       var response = await sendRequest(selectedShell, LIST_DIR);
-      const dir = parseListDirResponse(response.data);
+      const dir = parseListDirResponse(response.text);
 
       response = await sendRequest(selectedShell, WORKING_DIR);
-      const dirName = parseWorkingDir(response.data);
+      const dirName = parseWorkingDir(response.text);
       event.reply("shell:select-reply", { shell: selectedShell, dir: dir, dirName: dirName });
     } catch (error) {
       console.error(error);
@@ -94,7 +94,7 @@ async function createWindow() {
   ipcMain.on("terminal:command", async (event, command) => {
     try {
       var response = await sendArbitraryCommand(selectedShell, command);
-      const output = parseMultiline(response.data);
+      const output = parseMultiline(response.text);
       event.reply("terminal:command-reply", output);
     } catch(err) {
       console.log(err);
@@ -106,7 +106,7 @@ async function createWindow() {
     try {
       const newDirectory = newDirRelativeToAbsolute(selectedShell.os, directory.pwd, directory.dir);
       const response = await sendRequest(selectedShell, LIST_DIR, [newDirectory]);
-      const dirListing = parseListDirResponse(response.data);
+      const dirListing = parseListDirResponse(response.text);
 
       event.reply("file:change-dir-reply", {dirName: newDirectory, listing: dirListing});
     } catch(err) {
@@ -119,7 +119,7 @@ async function createWindow() {
     try {
       const filePath = newDirRelativeToAbsolute(selectedShell.os, file.pwd, file.file);
 	    const response = await sendRequest(selectedShell, READ_FILE, [filePath]);
-	    const textLines = parseMultiline(response.data);
+	    const textLines = parseMultiline(response.text);
 
       event.reply("file:view-reply", {fileName: filePath, textLines: textLines});
     } catch(err) {
