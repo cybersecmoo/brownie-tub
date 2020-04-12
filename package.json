@@ -47,7 +47,7 @@
     "pouchdb-adapter-node-websql": "^7.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.0",
+    "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "rxdb": "^8.8.0",
