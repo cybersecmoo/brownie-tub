@@ -45,13 +45,15 @@
     "axios": "^0.19.2",
     "crypto-js": "^4.0.0",
     "pouchdb-adapter-node-websql": "^7.0.0",
+    "qs": "^6.9.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "rxdb": "^8.8.0",
-    "rxjs": "^6.5.5"
+    "rxjs": "^6.5.5",
+    "superagent": "^5.2.2"
   },
   "scripts": {
     "test": "mocha",

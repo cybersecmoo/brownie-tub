@@ -1,6 +1,8 @@
 const axios = require("axios");
+const superagent = require("superagent");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
 const { WINDOWS, MAC, LINUX } = require("./osTypes");
+const qs = require("qs");
 
 const generateConfig = (shell, command) => {
 	var config = {
@@ -33,12 +35,7 @@ const generateConfig = (shell, command) => {
 
 			break;
 		case "POST":
-			config["data"][shell.commandParam] = command;			
-
-			if(shell.passwordEnabled) {
-				config["data"][shell.passwordParam] = shell.password;
-			}
-
+			console.log("POSTing");
 			break;
 		case "GET":
 			config["params"][shell.commandParam] = command;			
@@ -99,6 +96,7 @@ const sendArbitraryCommand = async (shell, command) => {
 		var response;
 
 		if(shell.commandParamType === "POST") {
+			console.log(config);
 			response = await axios.post(shell.ipOrHostname, config);
 		} else {
 			response = await axios.get(shell.ipOrHostname, config);
@@ -124,7 +122,12 @@ const determineOS = async (shell) => {
 	var response;
 
 	if(shell.commandParamType === "POST") {
-		response = await axios.post(shell.ipOrHostname, config);
+		var postString = `${shell.commandParam}`;
+		if(shell.passwordEnabled) {
+			postString += `&${shell.passwordParam}=${shell.password}`;
+		}
+		response = await superagent.post(shell.ipOrHostname).send(postString);
+		console.log(response);
 	} else {
 		response = await axios.get(shell.ipOrHostname, config);
 	}
