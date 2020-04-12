@@ -1,57 +1,6 @@
-const axios = require("axios");
 const superagent = require("superagent");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
 const { WINDOWS, MAC, LINUX } = require("./osTypes");
-const qs = require("qs");
-
-const generateConfig = (shell, command) => {
-	var config = {
-		headers: {
-			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0",
-		},
-		params: {},
-		data: {},
-		timeout: 30000
-	};
-
-	switch(shell.commandParamType) {
-		case "header":
-			config["headers"][shell.commandParam] = command;
-
-			if(shell.passwordEnabled) {
-				config["headers"][shell.passwordParam] = shell.password;
-			}
-
-			break;
-		case "cookie":
-			const commandCookie = `${shell.commandParam}=${command}`;
-
-			if(shell.passwordEnabled) {
-				authCookie = `${shell.passwordParam}=${shell.password}`;
-				config["headers"]["Cookie"] = commandCookie.concat("; ", authCookie);
-			} else {
-				config["headers"]["Cookie"] = commandCookie;
-			}
-
-			break;
-		case "POST":
-			console.log("POSTing");
-			break;
-		case "GET":
-			config["params"][shell.commandParam] = command;			
-
-			if(shell.passwordEnabled) {
-				config["params"][shell.passwordParam] = shell.password;
-			}
-
-			break;
-		default:
-			console.error("Invalid param type!");
-			break;
-	}
-	
-	return config;
-}
 
 const encodeCommand = (command, shellEncoding) => {
 	var encoded = command;
@@ -91,19 +40,47 @@ const sendRequest = async (shell, reqType, args = []) => {
 const sendArbitraryCommand = async (shell, command) => {
 	try {
 		var request = encodeCommand(command, shell.commandEncoding);
-
-		const config = generateConfig(shell, request);
 		var response;
 
 		if(shell.commandParamType === "POST") {
-			console.log(config);
-			response = await axios.post(shell.ipOrHostname, config);
-		} else {
-			response = await axios.get(shell.ipOrHostname, config);
-		}
+			var postString = `${shell.commandParam}=${request}`;
+			if(shell.passwordEnabled) {
+				postString += `&${shell.passwordParam}=${encodeCommand(shell.password, shell.commandEncoding)}`;
+			}
 
+			response = await superagent.post(shell.ipOrHostname).send(postString);
+		} else {
+			if(shell.commandParamType === "GET") {
+				var queryString = `${shell.commandParam}=${request}`;	
+				if(shell.passwordEnabled) {
+					queryString += `&${shell.passwordParam}=${encodeCommand(shell.password, shell.commandEncoding)}`;
+				}
+
+				response = await superagent.get(shell.ipOrHostname).query(queryString);
+			} else if(shell.commandParamType === "cookie") {
+				var headers = {};
+				headers["Cookie"] = `${shell.commandParam}=${request}`;
+				if(shell.passwordEnabled) {
+					headers["Cookie"] += `; ${shell.passwordParam}=${encodeCommand(shell.password, shell.commandEncoding)}`;
+				}
+				console.log(headers);
+
+				response = await superagent.get(shell.ipOrHostname).set(headers);
+			} else if(shell.commandParamType === "header") {
+				var headers = {};
+				headers[shell.commandParam] = request;
+				if(shell.passwordEnabled) {
+					headers[shell.passwordParam] = encodeCommand(shell.password, shell.commandEncoding);
+				}
+				console.log(headers);
+
+				response = await superagent.get(shell.ipOrHostname).set(headers);
+			} 
+		}
+		
 		return response;
 	} catch (error) {
+		console.log(error);
 		return null;
 	}
 	
@@ -116,28 +93,15 @@ const sendArbitraryCommand = async (shell, command) => {
  * @exports 
  */
 const determineOS = async (shell) => {
-	const command = encodeCommand("uname -a", shell.commandEncoding);
-
-	const config = generateConfig(shell, command);
-	var response;
-
-	if(shell.commandParamType === "POST") {
-		var postString = `${shell.commandParam}`;
-		if(shell.passwordEnabled) {
-			postString += `&${shell.passwordParam}=${shell.password}`;
-		}
-		response = await superagent.post(shell.ipOrHostname).send(postString);
-		console.log(response);
-	} else {
-		response = await axios.get(shell.ipOrHostname, config);
-	}
+	const response = await sendArbitraryCommand(shell, "uname -a");
 
 	var os = LINUX;
+	console.log(response);
 
 	// Windows does not have `uname`
-	if(response.data.includes("not recognized")) {
+	if(response.text.includes("not recognized")) {
 		os = WINDOWS;
-	} else if(response.data.includes("Linux")) {
+	} else if(response.text.includes("Linux")) {
 		os = LINUX;
 	} else {
 		os = MAC;
