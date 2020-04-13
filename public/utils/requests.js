@@ -1,6 +1,9 @@
 const superagent = require("superagent");
 const COMMAND_MAP = require("./reqTypes").COMMAND_MAP;
 const { WINDOWS, MAC, LINUX } = require("./osTypes");
+require("superagent-proxy")(superagent);
+
+const proxy = process.env.http_proxy || null;
 
 const encodeCommand = (command, shellEncoding) => {
 	var encoded = command;
@@ -48,7 +51,7 @@ const sendArbitraryCommand = async (shell, command) => {
 				postString += `&${shell.passwordParam}=${encodeCommand(shell.password, shell.commandEncoding)}`;
 			}
 
-			response = await superagent.post(shell.ipOrHostname).send(postString);
+			response = await superagent.post(shell.ipOrHostname).proxy(proxy).send(postString);
 		} else {
 			if(shell.commandParamType === "GET") {
 				var queryString = `${shell.commandParam}=${request}`;	
@@ -56,25 +59,23 @@ const sendArbitraryCommand = async (shell, command) => {
 					queryString += `&${shell.passwordParam}=${encodeCommand(shell.password, shell.commandEncoding)}`;
 				}
 
-				response = await superagent.get(shell.ipOrHostname).query(queryString);
+				response = await superagent.get(shell.ipOrHostname).proxy(proxy).query(queryString);
 			} else if(shell.commandParamType === "cookie") {
 				var headers = {};
 				headers["Cookie"] = `${shell.commandParam}=${request}`;
 				if(shell.passwordEnabled) {
 					headers["Cookie"] += `; ${shell.passwordParam}=${encodeCommand(shell.password, shell.commandEncoding)}`;
 				}
-				console.log(headers);
 
-				response = await superagent.get(shell.ipOrHostname).set(headers);
+				response = await superagent.get(shell.ipOrHostname).proxy(proxy).set(headers);
 			} else if(shell.commandParamType === "header") {
 				var headers = {};
 				headers[shell.commandParam] = request;
 				if(shell.passwordEnabled) {
 					headers[shell.passwordParam] = encodeCommand(shell.password, shell.commandEncoding);
 				}
-				console.log(headers);
 
-				response = await superagent.get(shell.ipOrHostname).set(headers);
+				response = await superagent.get(shell.ipOrHostname).proxy(proxy).set(headers);
 			} 
 		}
 		
@@ -96,7 +97,6 @@ const determineOS = async (shell) => {
 	const response = await sendArbitraryCommand(shell, "uname -a");
 
 	var os = LINUX;
-	console.log(response);
 
 	// Windows does not have `uname`
 	if(response.text.includes("not recognized")) {
