@@ -1,6 +1,6 @@
 {
   "name": "brownie-tub",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "public/electron.js",
   "private": true,
   "author": "cybersecmoo <50770700+cybersecmoo@users.noreply.github.com>",
@@ -51,7 +51,8 @@
     "redux-thunk": "^2.3.0",
     "rxdb": "^8.8.0",
     "rxjs": "^6.5.5",
-    "superagent": "^5.2.2"
+    "superagent": "^5.2.2",
+    "superagent-proxy": "^2.0.0"
   },
   "scripts": {
     "test": "mocha",
