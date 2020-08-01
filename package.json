@@ -29,7 +29,7 @@
     }
   },
   "devDependencies": {
-    "electron": "^7.2.1",
+    "electron": "^7.2.4",
     "electron-builder": "^22.4.1",
     "electron-rebuild": "^1.10.1",
     "install": "^0.13.0",
@@ -38,10 +38,10 @@
     "npm": "^6.14.4"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.10",
+    "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.49",
-    "@material-ui/styles": "^4.9.10",
+    "@material-ui/styles": "^4.9.13",
     "crypto-js": "^4.0.0",
     "pouchdb-adapter-node-websql": "^7.0.0",
     "react": "^16.13.1",
@@ -49,7 +49,7 @@
     "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "rxdb": "^8.8.0",
+    "rxdb": "^8.9.0",
     "rxjs": "^6.5.5",
     "superagent": "^5.2.2",
     "superagent-proxy": "^2.0.0",
