@@ -29,19 +29,19 @@
     }
   },
   "devDependencies": {
-    "electron": "^7.2.4",
-    "electron-builder": "^22.4.1",
-    "electron-rebuild": "^1.10.1",
+    "electron": "^7.3.2",
+    "electron-builder": "^22.8.0",
+    "electron-rebuild": "^1.11.0",
     "install": "^0.13.0",
-    "mocha": "^7.1.1",
-    "nodemon": "^2.0.3",
-    "npm": "^6.14.4"
+    "mocha": "^7.2.0",
+    "nodemon": "^2.0.4",
+    "npm": "^6.14.7"
   },
   "dependencies": {
-    "@material-ui/core": "^4.9.11",
+    "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.49",
-    "@material-ui/styles": "^4.9.13",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@material-ui/styles": "^4.10.0",
     "crypto-js": "^4.0.0",
     "pouchdb-adapter-node-websql": "^7.0.0",
     "react": "^16.13.1",
@@ -50,8 +50,8 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "rxdb": "^8.9.0",
-    "rxjs": "^6.5.5",
-    "superagent": "^5.3.1",
+    "rxjs": "^6.6.2",
+    "superagent": "^5.2.2",
     "superagent-proxy": "^2.0.0"
   },
   "scripts": {
@@ -79,5 +79,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "snyk": true
 }
