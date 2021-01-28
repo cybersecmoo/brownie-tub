@@ -29,7 +29,7 @@
     }
   },
   "devDependencies": {
-    "electron": "^7.3.2",
+    "electron": "^9.4.0",
     "electron-builder": "^22.8.0",
     "electron-rebuild": "^1.11.0",
     "install": "^0.13.0",
