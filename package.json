@@ -46,13 +46,13 @@
     "pouchdb-adapter-node-websql": "^7.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^4.0.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "rxdb": "^9.4.0",
+    "rxdb": "^10.1.0",
     "rxjs": "^6.6.2",
     "superagent": "^5.2.2",
-    "superagent-proxy": "^2.0.0"
+    "superagent-proxy": "^3.0.0"
   },
   "scripts": {
     "test": "mocha",
