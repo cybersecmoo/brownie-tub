@@ -49,7 +49,7 @@
     "react-scripts": "^3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "rxdb": "^9.4.0",
+    "rxdb": "^10.3.0",
     "rxjs": "^6.6.2",
     "superagent": "^5.2.2",
     "superagent-proxy": "^2.0.0"
