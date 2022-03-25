@@ -52,7 +52,8 @@
     "rxdb": "^9.4.0",
     "rxjs": "^6.6.2",
     "superagent": "^5.2.2",
-    "superagent-proxy": "^2.0.0"
+    "superagent-proxy": "^2.0.0",
+    "@snyk/protect": "latest"
   },
   "scripts": {
     "test": "mocha",
@@ -63,7 +64,9 @@
     "postinstall": "electron-builder install-app-deps && electron-rebuild",
     "preelectron-pack": "npm run build",
     "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
-    "release": "electron-builder -c.extraMetadata.main=build/electron.js"
+    "release": "electron-builder -c.extraMetadata.main=build/electron.js",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
