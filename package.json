@@ -33,7 +33,7 @@
     "electron-builder": "^22.8.0",
     "electron-rebuild": "^1.11.0",
     "install": "^0.13.0",
-    "mocha": "^7.2.0",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.4",
     "npm": "^6.14.7"
   },
